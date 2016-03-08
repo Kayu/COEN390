@@ -31,6 +31,7 @@ public class Direction {
             url.append("&departure_time=" + epoch);
 
         url.append("&mode=" + transportType);
+        url.append("&alternatives=true");
         url.append("&key=" + googleMapKey);
 
         return url.toString();
