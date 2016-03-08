@@ -8,6 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+
+import com.example.kayuho.coen390.Model.GetDirection;
+import com.example.kayuho.coen390.Model.UrlString;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +28,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+
+        Button btn_test = (Button)findViewById(R.id.button_test);
+        btn_test.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                String depart ="2211EmileNelligan";
+                String arrival="1087Duguay";
+                UrlString url = new UrlString(MainActivity.this,depart,arrival);
+                new GetDirection(MainActivity.this).execute(url.makeDirectionsURL("transit"));
             }
         });
     }
