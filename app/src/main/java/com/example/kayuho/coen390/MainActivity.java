@@ -25,38 +25,33 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
-        Button btn_test = (Button)findViewById(R.id.button_test);
-        btn_test.setOnClickListener(new View.OnClickListener(){
+
+        Button btn_test = (Button)findViewById(R.id.GetHomeButton);
+        btn_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String depart ="2211EmileNelligan";
-                String arrival="1087Duguay";
-                UrlString url = new UrlString(MainActivity.this,depart,arrival);
+                String depart = "2211EmileNelligan";
+                String arrival = "1087Duguay";
+                UrlString url = new UrlString(MainActivity.this, depart, arrival);
                 GetDirection getDirection = new GetDirection(MainActivity.this);
-                try{
+                try {
                     getDirection.execute(url.makeDirectionsURL("transit")).get();
-                }catch(ExecutionException e){
+                } catch (ExecutionException e) {
                     e.printStackTrace();
-                }catch (InterruptedException e){
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("markerPoints",getDirection.getPoints());
-                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                intent.putExtra("bunble",bundle);
+                bundle.putSerializable("markerPoints", getDirection.getPoints());
+                Intent intent = new Intent(MainActivity.this, TransitOptions.class);
+                intent.putExtra("bunble", bundle);
                 startActivity(intent);
             }
         });
+
+
     }
 
     @Override

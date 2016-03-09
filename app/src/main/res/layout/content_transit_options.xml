@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#FFFFFF"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.elec390.ryanpoitras.intoxic_aid.MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="#FFFFFF"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/PublicTransitLayout">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="PUBLIC TRANSIT"
+            android:textSize="40dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
+        <Button
+            android:id="@+id/TransitButton"
+            android:layout_width="378dp"
+            android:layout_height="70dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="81dp"
+            android:layout_x="-6dp"
+            android:layout_y="91dp"
+            android:text="Display Fastest Public Transit Option Here"
+            android:clickable="true"/>
+
+
+
+    </AbsoluteLayout>
+
+    <AbsoluteLayout
+        android:id="@+id/WalkingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#FFFFFF"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/PublicTransitLayout">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="159dp"
+            android:text="WALKING"
+            android:textSize="40dp"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:layout_below="@+id/absoluteLayout"
+            android:layout_alignParentStart="true"
+            android:id="@+id/WalkingText" />
+
+        <Button
+            android:id="@+id/WalkingButton"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="Display Walking Time Here"
+            android:layout_x="7dp"
+            android:layout_y="112dp"
+            android:clickable="true"/>
+    </AbsoluteLayout>
+
+</RelativeLayout>
