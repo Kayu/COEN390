@@ -32,6 +32,8 @@ public class GetDirection extends AsyncTask< String, Void, String>{
     Context current;
     Double travelTime;
     ArrayList<LatLng> points;
+    private long distance, duration;
+    private String text_distance, text_duration;
 
     public GetDirection(Context context){
         this.current=context;
@@ -80,7 +82,12 @@ public class GetDirection extends AsyncTask< String, Void, String>{
                 JSONObject overviewPolylines = routes.getJSONObject("overview_polyline");
                 String encodedString = overviewPolylines.getString("points");
                 points = decodePolyline(encodedString);
-
+                distance = routes.getJSONArray("legs").getJSONObject(0).getJSONObject("distance").getInt("value");
+                duration = routes.getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");
+                text_distance = routes.getJSONArray("legs").getJSONObject(0).getJSONObject("distance").getString("text");
+                text_duration = routes.getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getString("text");
+                Log.i("DISTANCE", text_distance);
+                Log.i("DURATION", text_duration);
 
             }
         }
