@@ -21,7 +21,7 @@ public class TransitOptionsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
         Bundle mBundle = intent.getBundleExtra("bundle");
-        Direction transitDirection = (Direction) mBundle.getParcelable("transit");
+        final Direction transitDirection = (Direction) mBundle.getParcelable("transit");
 
         StringBuilder str_publictransit =  new StringBuilder();;
         str_publictransit.append("PUBLIC TANSIT: ");
@@ -37,6 +37,9 @@ public class TransitOptionsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TransitOptionsActivity.this, MapsActivity.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable("LatLng", transitDirection.getPoints());
+                intent.putExtra("bundle",mBundle);
                 startActivity(intent);
             }
         });
