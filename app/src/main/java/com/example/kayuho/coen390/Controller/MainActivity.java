@@ -1,6 +1,7 @@
 package com.example.kayuho.coen390.Controller;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -34,22 +35,39 @@ public class MainActivity extends AppCompatActivity {
                 String depart = "2211EmileNelligan";
                 String arrival = "1087Duguay";
                 UrlString url = new UrlString(MainActivity.this, depart, arrival);
-                GetDirection getDirection = new GetDirection(MainActivity.this);
+                GetDirection getTransitDirection = new GetDirection(MainActivity.this);
                 Direction transitDirection;
                 try {
-                    getDirection.execute(url.makeDirectionsURL("transit")).get();
+                    getTransitDirection.execute(url.makeDirectionsURL("transit")).get();
 
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                transitDirection = getDirection.getPoints();
+                transitDirection = getTransitDirection.getPoints();
                 Intent intent = new Intent(MainActivity.this, TransitOptionsActivity.class);
 
                 Bundle mBundle = new Bundle();
-                mBundle.putParcelable("transit",transitDirection);
+                mBundle.putParcelable("transit", transitDirection);
                 intent.putExtra("bundle", mBundle);
+
+                GetDirection getWalkingDirection = new GetDirection((MainActivity.this));
+
+                Direction walkingDirection;
+                try {
+                    getWalkingDirection.execute(url.makeDirectionsURL("walking")).get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                    ;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                walkingDirection = getWalkingDirection.getPoints();
+
+                Bundle wBundle = new Bundle();
+                wBundle.putParcelable("walking", walkingDirection);
+                intent.putExtra("walkBundle", wBundle);
                 startActivity(intent);
             }
         });

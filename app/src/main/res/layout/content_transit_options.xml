@@ -27,7 +27,7 @@
             android:layout_height="50dp"
             android:text="PUBLIC TRANSIT"
             android:id = "@+id/publictansit_textview"
-            android:textSize="12dp"
+            android:textSize="40dp"
             android:textColor="#000000"
             android:textStyle="bold"
             android:textAlignment="center"/>
@@ -40,7 +40,8 @@
             android:layout_marginTop="81dp"
             android:layout_x="-6dp"
             android:layout_y="91dp"
-            android:text="Display Fastest Public Transit Option Here"
+            android:textSize="13dp"
+            android:textAlignment="center"
             android:clickable="true"/>
 
 
