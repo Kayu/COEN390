@@ -1,4 +1,4 @@
-package com.example.kayuho.coen390;
+package com.example.kayuho.coen390.Service;
 
 import android.location.Location;
 import android.location.LocationListener;
@@ -9,7 +9,6 @@ import android.util.Log;
  * Created by zhou on 2016/3/9.
  */
 public class MyLocListener implements LocationListener {
-
 
     @Override
     public void onLocationChanged(Location location) {

@@ -1,10 +1,12 @@
-package com.example.kayuho.coen390;
+package com.example.kayuho.coen390.Controller;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.kayuho.coen390.R;
 
 /**
  * A placeholder fragment containing a simple view.

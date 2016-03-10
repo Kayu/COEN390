@@ -1,7 +1,6 @@
 package com.example.kayuho.coen390;
 
 import android.content.Context;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.example.kayuho.coen390.R;
+import com.example.kayuho.coen390.Service.MyLocListener;
 
 public class GetLocation extends AppCompatActivity {
 

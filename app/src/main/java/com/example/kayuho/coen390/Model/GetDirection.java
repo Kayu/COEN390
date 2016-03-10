@@ -30,10 +30,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class GetDirection extends AsyncTask< String, Void, String>{
     ProgressDialog dialog;
     Context current;
-    Double travelTime;
-    ArrayList<LatLng> points;
-    private long distance, duration;
-    private String text_distance, text_duration;
+    Direction direction;
 
     public GetDirection(Context context){
         this.current=context;
@@ -81,13 +78,14 @@ public class GetDirection extends AsyncTask< String, Void, String>{
                 JSONObject routes = routeObj.getJSONObject(0);
                 JSONObject overviewPolylines = routes.getJSONObject("overview_polyline");
                 String encodedString = overviewPolylines.getString("points");
-                points = decodePolyline(encodedString);
-                distance = routes.getJSONArray("legs").getJSONObject(0).getJSONObject("distance").getInt("value");
-                duration = routes.getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");
-                text_distance = routes.getJSONArray("legs").getJSONObject(0).getJSONObject("distance").getString("text");
-                text_duration = routes.getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getString("text");
-                Log.i("DISTANCE", text_distance);
-                Log.i("DURATION", text_duration);
+
+                ArrayList<LatLng> points = decodePolyline(encodedString);
+                String distance = routes.getJSONArray("legs").getJSONObject(0).getJSONObject("distance").getString("text");
+                String duration = routes.getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getString("text");
+                direction = new Direction(points, duration, distance);
+
+                Log.i("DISTANCE", distance);
+                Log.i("DURATION", duration);
 
             }
         }
@@ -143,7 +141,7 @@ public class GetDirection extends AsyncTask< String, Void, String>{
         return poly;
     }
 
-    public ArrayList<LatLng> getPoints(){
-        return points;
+    public Direction getPoints(){
+        return direction;
     }
 }

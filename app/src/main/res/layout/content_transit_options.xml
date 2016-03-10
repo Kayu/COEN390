@@ -26,7 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="PUBLIC TRANSIT"
-            android:textSize="40dp"
+            android:id = "@+id/publictansit_textview"
+            android:textSize="12dp"
             android:textColor="#000000"
             android:textStyle="bold"
             android:textAlignment="center"/>

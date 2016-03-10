@@ -1,4 +1,4 @@
-package com.example.kayuho.coen390;
+package com.example.kayuho.coen390.Service;
 
 import android.content.ContentValues;
 import android.content.Context;

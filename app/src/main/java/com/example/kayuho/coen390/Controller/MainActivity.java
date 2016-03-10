@@ -1,9 +1,7 @@
-package com.example.kayuho.coen390;
+package com.example.kayuho.coen390.Controller;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,8 +9,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import com.example.kayuho.coen390.Model.Direction;
 import com.example.kayuho.coen390.Model.GetDirection;
 import com.example.kayuho.coen390.Model.UrlString;
+import com.example.kayuho.coen390.R;
 
 import java.util.concurrent.ExecutionException;
 
@@ -35,18 +35,21 @@ public class MainActivity extends AppCompatActivity {
                 String arrival = "1087Duguay";
                 UrlString url = new UrlString(MainActivity.this, depart, arrival);
                 GetDirection getDirection = new GetDirection(MainActivity.this);
+                Direction transitDirection;
                 try {
                     getDirection.execute(url.makeDirectionsURL("transit")).get();
+
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                transitDirection = getDirection.getPoints();
+                Intent intent = new Intent(MainActivity.this, TransitOptionsActivity.class);
 
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("markerPoints", getDirection.getPoints());
-                Intent intent = new Intent(MainActivity.this, TransitOptions.class);
-                intent.putExtra("bunble", bundle);
+                Bundle mBundle = new Bundle();
+                mBundle.putParcelable("transit",transitDirection);
+                intent.putExtra("bundle", mBundle);
                 startActivity(intent);
             }
         });

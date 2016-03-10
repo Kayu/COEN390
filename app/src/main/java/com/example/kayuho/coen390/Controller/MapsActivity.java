@@ -1,10 +1,11 @@
-package com.example.kayuho.coen390;
+package com.example.kayuho.coen390.Controller;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.example.kayuho.coen390.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
