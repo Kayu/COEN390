@@ -43,6 +43,10 @@
         <activity
             android:name=".TransitOptions"
             android:label="@string/title_activity_transit_options"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".GetLocation"
+            android:label="@string/title_activity_get_location"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
