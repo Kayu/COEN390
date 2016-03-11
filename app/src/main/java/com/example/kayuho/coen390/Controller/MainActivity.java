@@ -1,29 +1,41 @@
 package com.example.kayuho.coen390.Controller;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
+
 import com.example.kayuho.coen390.Model.Direction;
 import com.example.kayuho.coen390.Model.JsonParser;
+import com.example.kayuho.coen390.Model.MyLocListener;
 import com.example.kayuho.coen390.Model.UrlString;
 import com.example.kayuho.coen390.R;
 
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
-
+    private LocationManager locationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        openGPSSettings();
+        GPSServicelistner();
         Button btn_test = (Button)findViewById(R.id.GetHomeButton);
         btn_test.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,4 +104,52 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+        // check if GPS is turned on
+
+    private void openGPSSettings() {
+        LocationManager alm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (alm.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
+            Toast.makeText(this, "GPS is on", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Toast.makeText(this, "Please open the GPS！", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+        //after setting
+
+
+    }
+//after setting
+
+
+    protected void GPSServicelistner() {
+        new MyLocListener();
+        LocationManager myManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        //Location location =  myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        boolean test = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+        if ( test) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details
+
+            Location location =  myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            MyLocListener loc = new MyLocListener();
+            myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 6000, 10, loc);
+            Double lat = location.getLatitude();
+            Double lon = location.getLongitude();
+
+
+            Log.i("latitude", lat.toString());
+            Log.i("longitude", lon.toString() );
+        }
+
+    }
+
 }

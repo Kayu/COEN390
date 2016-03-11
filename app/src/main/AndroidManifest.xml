@@ -8,6 +8,7 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -43,10 +44,6 @@
         <activity
             android:name=".Controller.TransitOptionsActivity"
             android:label="@string/title_activity_transit_options"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Model.GetLocation"
-            android:label="@string/title_activity_get_location"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

@@ -14,11 +14,13 @@ public class MyLocListener implements LocationListener {
     public void onLocationChanged(Location location) {
         if (location != null)
         {
-            Log.e("Latitude:", "" + location.getLatitude());
-            Log.e("Longitude:", "" + location.getLongitude());
+
+            Double longitude = location.getLongitude();
+            Double latitude = location.getLatitude();
 
         }
     }
+
 
 
     @Override
@@ -32,4 +34,6 @@ public class MyLocListener implements LocationListener {
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras){
     }
+
+
 }
