@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.http.HttpResponseCache;
 import android.os.AsyncTask;
+import android.text.Html;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -82,10 +83,22 @@ public class GetDirection extends AsyncTask< String, Void, String>{
                 ArrayList<LatLng> points = decodePolyline(encodedString);
                 String distance = routes.getJSONArray("legs").getJSONObject(0).getJSONObject("distance").getString("text");
                 String duration = routes.getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getString("text");
-                direction = new Direction(points, duration, distance);
+                JSONArray steps = routes.getJSONArray("legs").getJSONObject(0).getJSONArray("steps");
+                JSONObject step;
+                ArrayList<String> directions = new ArrayList<String>();
+                for (int i = 0; i < steps.length(); i++) {
+                    step = (JSONObject)steps.get(i);
+                    directions.add(Html.fromHtml(step.getString("html_instructions")).toString() );
+                }
+
+                direction = new Direction(points, directions, duration, distance);
 
                 Log.i("DISTANCE", distance);
                 Log.i("DURATION", duration);
+
+                for(int i=0;i<directions.size();i++){
+                    Log.i("STEP", directions.get(i));
+                }
 
             }
         }
@@ -133,11 +146,11 @@ public class GetDirection extends AsyncTask< String, Void, String>{
             LatLng p = new LatLng((((double) lat / 1E5)),(((double) lng / 1E5)));
             poly.add(p);
         }
-
+        /*
         for(int i=0;i<poly.size();i++){
             Log.i("Location", "Point sent: Latitude: "+poly.get(i).latitude+" Longitude: "+poly.get(i).longitude);
         }
-
+        */
         return poly;
     }
 

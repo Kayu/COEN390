@@ -41,12 +41,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private ArrayList<LatLng> markerPoints;
+    private ArrayList<String> directionsList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        Bundle bunble = intent.getBundleExtra("bundle");
-        markerPoints = (ArrayList<LatLng>)bunble.getSerializable("LatLng");
+        Bundle bundle = intent.getBundleExtra("bundle");
+        markerPoints = (ArrayList<LatLng>)bundle.getSerializable("LatLng");
+        directionsList = (ArrayList<String>)bundle.getSerializable("Directions");
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -54,16 +56,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         ListView directions = (ListView)findViewById(R.id.DirectionListView);
-        ArrayList<String> directionsList = new ArrayList<String>();
-
         //Replace this with directions to display in list view
-        directionsList.add(0,"Hello");
-        directionsList.add(1,"World");
-        directionsList.add(2,"How");
-        directionsList.add(3,"Are");
-        directionsList.add(4,"You");
-        directionsList.add(5,"Today");
-
         ArrayAdapter<String> directionsAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,directionsList);
         directions.setAdapter(directionsAdapter);
     }

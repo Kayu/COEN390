@@ -13,21 +13,25 @@ import java.util.ArrayList;
  */
 public class Direction implements Parcelable {
     private ArrayList<LatLng> points;
+    private ArrayList<String> directions;
     private String distance, duration;
 
     public Direction(Parcel parcel){
         this.points = parcel.readArrayList(LatLng.class.getClassLoader());
+        this.directions = parcel.readArrayList(String.class.getClassLoader());
         this.duration = parcel.readString();
         this.distance = parcel.readString();
     }
-    public Direction(ArrayList<LatLng> points, String duration, String distance){
+    public Direction(ArrayList<LatLng> points,ArrayList<String>directions, String duration, String distance){
         this.points = points;
+        this.directions = directions;
         this.distance = distance;
         this.duration = duration;
     }
     public ArrayList<LatLng> getPoints(){
         return points;
     }
+    public ArrayList<String> getDirections(){return directions;}
     public String getDuration(){
         return duration;
     }
@@ -40,6 +44,7 @@ public class Direction implements Parcelable {
     }
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeList(points);
+        dest.writeList(directions);
         dest.writeString(duration);
         dest.writeString(distance);
     }

@@ -49,7 +49,8 @@ public class TransitOptionsActivity extends AppCompatActivity {
                 Intent intent = new Intent(TransitOptionsActivity.this, MapsActivity.class);
                 Bundle mBundle = new Bundle();
                 mBundle.putSerializable("LatLng", transitDirection.getPoints());
-                intent.putExtra("bundle",mBundle);
+                mBundle.putSerializable("Directions", transitDirection.getDirections());
+                intent.putExtra("bundle", mBundle);
                 startActivity(intent);
             }
         });
@@ -64,6 +65,7 @@ public class TransitOptionsActivity extends AppCompatActivity {
                 Intent intent = new Intent(TransitOptionsActivity.this, MapsActivity.class);
                 Bundle wBundle = new Bundle();
                 wBundle.putSerializable("LatLng", walkingDirection.getPoints());
+                wBundle.putSerializable("Directions", walkingDirection.getDirections());
                 intent.putExtra("bundle", wBundle);
                 startActivity(intent);
             }
