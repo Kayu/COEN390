@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         Button btn_test = (Button)findViewById(R.id.GetHomeButton);
         btn_test.setOnClickListener(new View.OnClickListener() {
             @Override

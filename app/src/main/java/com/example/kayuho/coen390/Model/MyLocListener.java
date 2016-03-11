@@ -1,4 +1,4 @@
-package com.example.kayuho.coen390.Service;
+package com.example.kayuho.coen390.Model;
 
 import android.location.Location;
 import android.location.LocationListener;
