@@ -61,13 +61,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         directions.setAdapter(directionsAdapter);
     }
 
-
-
-
-
-
-
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -80,28 +73,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        /*
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        */
         Polyline polylineToAdd = mMap.addPolyline(new PolylineOptions().addAll(markerPoints).width(3).color(Color.RED));
         LatLng begin = markerPoints.get(0);
         LatLng end = markerPoints.get(markerPoints.size()-1);
         LatLng middle = markerPoints.get(markerPoints.size()/2);
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.addMarker(new MarkerOptions().position(begin).title("Start"));
-        mMap.addMarker(new MarkerOptions().position(end).title("Destination"));
+        mMap.addMarker(new MarkerOptions().position(end).title("Home"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(middle,11));
 
     }
-
-    public void CalculatePosition(){
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-
-
-    }
-
 }

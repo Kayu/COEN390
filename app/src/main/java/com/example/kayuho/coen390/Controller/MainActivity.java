@@ -1,7 +1,6 @@
 package com.example.kayuho.coen390.Controller;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,9 +24,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
 
         Button btn_test = (Button)findViewById(R.id.GetHomeButton);
         btn_test.setOnClickListener(new View.OnClickListener() {

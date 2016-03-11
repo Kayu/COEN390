@@ -18,10 +18,9 @@ public class GetLocation extends AppCompatActivity {
         setContentView(R.layout.activity_get_location);
 
 // get location by using GPS
-        LocationManager myManager;
-        MyLocListener loc = null;
-        loc = new MyLocListener();
-        myManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        MyLocListener loc = new MyLocListener();;
+        LocationManager myManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
