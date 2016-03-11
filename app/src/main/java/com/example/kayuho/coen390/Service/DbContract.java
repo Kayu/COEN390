@@ -23,7 +23,7 @@ public class DbContract {
         //table name
         public static final String TABLE_NAME = "address";
         //first column name
-        public static final String COLUMN_FACT = "myaddress";
+        public static final String COLUMN_ADDRESS = "myaddress";
 
 
     }

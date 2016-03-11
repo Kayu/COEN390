@@ -27,6 +27,10 @@ import com.example.kayuho.coen390.R;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
+
+    //Testing
+    Button DatabaseTest;  //Testing the database
+
     private LocationManager locationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //**********TESTING***************************
+        DatabaseTest = (Button) findViewById(R.id.Test);
+        DatabaseTest.setOnClickListener(new View.OnClickListener(){
+            public void onClick (View v){
+                Intent intent = new Intent (MainActivity.this,DatabaseTest.class);
+                startActivity(intent);
+            }
+        });
+        //*********************************************
+
         openGPSSettings();
         GPSServicelistner();
         Button btn_test = (Button)findViewById(R.id.GetHomeButton);

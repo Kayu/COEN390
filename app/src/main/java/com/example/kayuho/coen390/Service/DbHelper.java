@@ -20,7 +20,8 @@ public class DbHelper extends SQLiteOpenHelper {
      SQL query that delete the table
      "drop talbe if exist facts;"
     */
-    private String DROP_TABLE = "DROP TABLE IF EXISTS " + DbContract.ContactsEntry.TABLE_NAME;
+    private String DROP_ADDRESS = "DROP TABLE IF EXISTS " + DbContract.AddressEntry.TABLE_NAME;
+    //private String DROP_CONTACTS = "DROP TABLE IF EXISTS " + DbContract.ContactsEntry.TABLE_NAME;
     /*
     SQL query that create the table
     "create table if not exists facts ( ID integer primary key autoincrement, fact text, type text);"
@@ -31,6 +32,12 @@ public class DbHelper extends SQLiteOpenHelper {
             + DbContract.ContactsEntry.COLUMN_NAME + " text, "
             + DbContract.ContactsEntry.COLUMN_NUM + " text);";   //Integer for phone numbers?
 
+
+    private String AddressTable = "create table if not exists "
+            + DbContract.AddressEntry.TABLE_NAME + " ( "
+            + BaseColumns._ID + " integer primary key autoincrement, "
+            + DbContract.AddressEntry.COLUMN_ADDRESS + " text);";
+
     //database connection object
     private SQLiteDatabase db;
     public DbHelper(Context context){
@@ -40,16 +47,18 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     //execute create table querie when first creating an object for this class.
     public void onCreate(SQLiteDatabase db){
-        db.execSQL(ContactsTable);
+       // db.execSQL(ContactsTable);
+        db.execSQL(AddressTable);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
-        db.execSQL(DROP_TABLE);
+        db.execSQL(DROP_ADDRESS); //drops the table to put in the updated one
+        // db.execSQL(DROP_CONTACTS);
         onCreate(db);
     }
 
-    public boolean insert(String name, String num){
+    public boolean insert_contact(String name, String num){
 
         ContentValues values = new ContentValues(2);
         values.put(DbContract.ContactsEntry.COLUMN_NAME, name);
@@ -60,28 +69,39 @@ public class DbHelper extends SQLiteOpenHelper {
         return (successful > 0);
     }
 
+    public boolean insert_address(String address){
+
+        ContentValues values = new ContentValues(1); //amount of items trying to input into the DB
+        values.put(DbContract.AddressEntry.COLUMN_ADDRESS, address);
+        db = this.getWritableDatabase(); //get permission to write into the database
+        long successful = db.insert(DbContract.AddressEntry.TABLE_NAME, null, values);
+        db.close(); // close the connection to the database -- opened during getWritabableDatabase();
+        return (successful > 0);
+    }
+
+
+    // may be useful -- possibly wipe later on
     public Cursor getAllData(){
-        db = this.getWritableDatabase();
-        final String retrieveQuery="SELECT * FROM "+ DbContract.ContactsEntry.TABLE_NAME;
+        db = this.getReadableDatabase();  //open connection to DB
+        final String retrieveQuery="SELECT * FROM "+ DbContract.AddressEntry.TABLE_NAME;
         Cursor data = db.rawQuery(retrieveQuery, null);
+        db.close(); //close connection to DB
         return data;
     }
 
-    public Cursor getSpecificFactsType(String type){
+    public Cursor getAddress(){
         db = this.getWritableDatabase();
-        final String retrieveQuery= "SELECT "+ DbContract.ContactsEntry.COLUMN_NAME
-                + " FROM "+ DbContract.ContactsEntry.TABLE_NAME
-                + " WHERE "+ DbContract.ContactsEntry.COLUMN_NUM
-                + " = '" + type+"';";
+        final String retrieveQuery= "SELECT "+ DbContract.AddressEntry.COLUMN_ADDRESS
+                + " FROM "+ DbContract.AddressEntry.TABLE_NAME;
         Cursor data = db.rawQuery(retrieveQuery,null);
         return data;
     }
 
     public void deleteAll(){
         db = this.getWritableDatabase();
-        db.execSQL(DROP_TABLE);
+        db.execSQL(DROP_ADDRESS);
 
-        db.execSQL(ContactsTable);
+        onCreate(db);
         db.close();
 
     }
