@@ -7,11 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import com.example.kayuho.coen390.Model.Direction;
-import com.example.kayuho.coen390.Model.GetDirection;
-import com.example.kayuho.coen390.Model.UrlString;
-import com.example.kayuho.coen390.Model.UrlString;
 import com.example.kayuho.coen390.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

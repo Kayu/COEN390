@@ -2,18 +2,13 @@ package com.example.kayuho.coen390.Model;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.net.http.HttpResponseCache;
 import android.os.AsyncTask;
 import android.text.Html;
 import android.util.Log;
-import android.widget.Toast;
-
 import com.google.android.gms.maps.model.LatLng;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,12 +23,12 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * Created by Kayu on 2016-03-07.
  */
-public class GetDirection extends AsyncTask< String, Void, String>{
+public class JsonParser extends AsyncTask< String, Void, String>{
     ProgressDialog dialog;
     Context current;
     Direction direction;
 
-    public GetDirection(Context context){
+    public JsonParser(Context context){
         this.current=context;
         dialog = new ProgressDialog(current);
     }
@@ -51,8 +46,6 @@ public class GetDirection extends AsyncTask< String, Void, String>{
         super.onPostExecute(value);
 
         dialog.dismiss();
-
-
         //Toast.makeText(current, "ERROR, something wrong happen, please check inputed values ",Toast.LENGTH_SHORT).show();
     }
 
@@ -103,7 +96,7 @@ public class GetDirection extends AsyncTask< String, Void, String>{
             }
         }
         catch(MalformedURLException e){
-            Log.d("error","url mal formatted");
+            Log.d("error","url is malformded");
         }
         catch (IOException e) {
             Log.d("error", "connection failed");

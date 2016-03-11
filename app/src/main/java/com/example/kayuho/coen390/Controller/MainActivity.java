@@ -8,9 +8,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-
 import com.example.kayuho.coen390.Model.Direction;
-import com.example.kayuho.coen390.Model.GetDirection;
+import com.example.kayuho.coen390.Model.JsonParser;
 import com.example.kayuho.coen390.Model.UrlString;
 import com.example.kayuho.coen390.R;
 
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 String depart = "2211EmileNelligan";
                 String arrival = "1087Duguay";
                 UrlString url = new UrlString(MainActivity.this, depart, arrival);
-                GetDirection getTransitDirection = new GetDirection(MainActivity.this);
+                JsonParser getTransitDirection = new JsonParser(MainActivity.this);
                 Direction transitDirection;
                 try {
                     getTransitDirection.execute(url.makeDirectionsURL("transit")).get();
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 mBundle.putParcelable("transit", transitDirection);
                 intent.putExtra("bundle", mBundle);
 
-                GetDirection getWalkingDirection = new GetDirection((MainActivity.this));
+                JsonParser getWalkingDirection = new JsonParser((MainActivity.this));
 
                 Direction walkingDirection;
                 try {

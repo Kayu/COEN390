@@ -16,7 +16,7 @@ public class UrlString {
         this.from = from;
         this.to = to;
         this.googleMapKey = context.getResources().getString(R.string.google_maps_key);
-        int i =0;
+
     }
 
     public String makeDirectionsURL(String transportType){
@@ -33,6 +33,4 @@ public class UrlString {
 
         return url.toString();
     }
-
-
 }
