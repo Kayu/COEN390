@@ -17,7 +17,7 @@ public class GetLocation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_location);
 
-
+// get location by using GPS
         LocationManager myManager;
         MyLocListener loc = null;
         loc = new MyLocListener();
