@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.example.kayuho.coen390.Model.Direction;
 import com.example.kayuho.coen390.Model.GetDirection;
@@ -51,9 +53,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        ListView directions = (ListView)findViewById(R.id.DirectionListView);
+        ArrayList<String> directionsList = new ArrayList<String>();
 
+        //Replace this with directions to display in list view
+        directionsList.add(0,"Hello");
+        directionsList.add(1,"World");
+        directionsList.add(2,"How");
+        directionsList.add(3,"Are");
+        directionsList.add(4,"You");
+        directionsList.add(5,"Today");
 
+        ArrayAdapter<String> directionsAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,directionsList);
+        directions.setAdapter(directionsAdapter);
     }
+
+
+
+
+
 
 
 
