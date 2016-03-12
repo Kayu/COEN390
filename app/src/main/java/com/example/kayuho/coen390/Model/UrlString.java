@@ -12,6 +12,7 @@ import java.util.Date;
 public class UrlString {
     private String from , to;
     private String googleMapKey;
+    private StringBuilder url;
     public UrlString(Context context, String from, String to){
         this.from = from;
         this.to = to;
@@ -20,7 +21,7 @@ public class UrlString {
     }
 
     public String makeDirectionsURL(String transportType){
-        StringBuilder url = new StringBuilder();
+        url = new StringBuilder();
         url.append("https://maps.googleapis.com/maps/api/directions/json?");
         url.append("origin=");
         url.append(from);

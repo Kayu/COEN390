@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Testing
     Button DatabaseTest;  //Testing the database
-
+    Double lat,lon;
     private LocationManager locationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /*
         //**********TESTING***************************
         DatabaseTest = (Button) findViewById(R.id.Test);
         DatabaseTest.setOnClickListener(new View.OnClickListener(){
@@ -48,14 +49,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //*********************************************
-
+        */
         openGPSSettings();
         GPSServicelistner();
         Button btn_test = (Button)findViewById(R.id.GetHomeButton);
         btn_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String depart = "2211EmileNelligan";
+                String depart = lat.toString()+","+lon.toString();
                 String arrival = "1087Duguay";
                 UrlString url = new UrlString(MainActivity.this, depart, arrival);
                 JsonParser getTransitDirection = new JsonParser(MainActivity.this);
@@ -157,9 +158,8 @@ public class MainActivity extends AppCompatActivity {
             Location location =  myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             MyLocListener loc = new MyLocListener();
             myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 6000, 10, loc);
-            Double lat = location.getLatitude();
-            Double lon = location.getLongitude();
-
+            lat = location.getLatitude();
+            lon = location.getLongitude();
 
             Log.i("latitude", lat.toString());
             Log.i("longitude", lon.toString() );
