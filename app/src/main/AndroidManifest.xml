@@ -50,6 +50,9 @@
             android:label="Database Activity"
             android:parentActivityName=".Controller.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Controller.SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 
 </manifest>
