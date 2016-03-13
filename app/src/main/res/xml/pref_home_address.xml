@@ -10,4 +10,14 @@
     android:singleLine="true"
     android:title="Your Address" />
 
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="Which Contacts do you wish to Block?"
+        android:key="Blocked_Contacts"
+        android:inputType="textMultiLine"
+        android:lines='5'
+        android:maxLines='5'
+        android:selectAllOnFocus="true"
+        android:title="Blocked Contacts" />
+
 </PreferenceScreen>

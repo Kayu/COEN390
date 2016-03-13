@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import com.example.kayuho.coen390.Model.Direction;
-import com.example.kayuho.coen390.Model.GetDirection;
+import com.example.kayuho.coen390.Model.JsonParser;
 import com.example.kayuho.coen390.Model.UrlString;
 import com.example.kayuho.coen390.R;
 
@@ -32,10 +32,10 @@ public class MainActivity extends AppCompatActivity {
                 String depart = "2211EmileNelligan";
                 String arrival = "1087Duguay";
                 UrlString url = new UrlString(MainActivity.this, depart, arrival);
-                GetDirection getTransitDirection = new GetDirection(MainActivity.this);
+                JsonParser getTransitDirection = new JsonParser(MainActivity.this);
                 Direction transitDirection;
                 try {
-                    getTransitDirection.execute(url.makeDirectionsURL("transit")).get();
+                  getTransitDirection.execute(url.makeDirectionsURL("transit")).get();
 
                 } catch (ExecutionException e) {
                     e.printStackTrace();
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 mBundle.putParcelable("transit", transitDirection);
                 intent.putExtra("bundle", mBundle);
 
-                GetDirection getWalkingDirection = new GetDirection((MainActivity.this));
+                JsonParser getWalkingDirection = new JsonParser((MainActivity.this));
 
                 Direction walkingDirection;
                 try {
@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -85,12 +86,12 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent=new Intent(MainActivity.this,SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
