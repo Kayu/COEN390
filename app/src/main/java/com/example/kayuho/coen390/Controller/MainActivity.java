@@ -134,7 +134,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Toast.makeText(this, "Please open the GPS！", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+        Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+        startActivityForResult(intent,0);
         //after setting
 
 
