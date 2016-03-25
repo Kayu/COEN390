@@ -21,8 +21,6 @@ public class MyLocListener implements LocationListener {
         }
     }
 
-
-
     @Override
     public void onProviderEnabled(String provider){
     }

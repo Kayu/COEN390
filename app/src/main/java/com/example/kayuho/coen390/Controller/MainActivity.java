@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 UrlString url = new UrlString(MainActivity.this, depart, arrival);
                 JsonParser getTransitDirection = new JsonParser(MainActivity.this);
                 Direction transitDirection;
+
                 try {
                     getTransitDirection.execute(url.makeDirectionsURL("transit")).get();
 
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 JsonParser getWalkingDirection = new JsonParser((MainActivity.this));
 
                 Direction walkingDirection;
+
                 try {
                     getWalkingDirection.execute(url.makeDirectionsURL("walking")).get();
                 } catch (ExecutionException e) {

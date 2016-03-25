@@ -7,6 +7,9 @@
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality. 
     -->
+    <user-permission android:name="android.permission.RECEIVE_SMS"/>
+    <user-permission android:name="android.permission.READ_SMS"/>
+    <user-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
 
@@ -25,7 +28,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <receiver android:name=".Service$OutgoingSms" android:enable="true">
+                <intent-filter>
+                    <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+                    <action android:name="android.provider.Telephony.SMS_SENT"/>
+                </intent-filter>
+            </receiver>
         </activity>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
