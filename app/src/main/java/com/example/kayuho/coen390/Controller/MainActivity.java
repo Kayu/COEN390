@@ -1,6 +1,7 @@
 package com.example.kayuho.coen390.Controller;
 
 import android.Manifest;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.example.kayuho.coen390.Model.Direction;
 import com.example.kayuho.coen390.Model.JsonParser;
 import com.example.kayuho.coen390.Model.MyLocListener;
+import com.example.kayuho.coen390.Service.OutgoingCallReceiver;
 import com.example.kayuho.coen390.Model.UrlString;
 import com.example.kayuho.coen390.R;
 
@@ -32,6 +34,14 @@ public class MainActivity extends AppCompatActivity {
     Button DatabaseTest;  //Testing the database
     Double lat,lon;
     private LocationManager locationManager;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     // check if GPS is turned on
 
     private void openGPSSettings() {
@@ -171,3 +182,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+

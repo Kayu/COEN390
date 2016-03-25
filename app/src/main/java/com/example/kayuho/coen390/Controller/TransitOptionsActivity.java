@@ -10,8 +10,17 @@ import android.widget.TextView;
 
 import com.example.kayuho.coen390.Model.Direction;
 import com.example.kayuho.coen390.R;
+import com.example.kayuho.coen390.Service.OutgoingCallReceiver;
 
 public class TransitOptionsActivity extends AppCompatActivity {
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        OutgoingCallReceiver newCall = new OutgoingCallReceiver();
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

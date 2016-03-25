@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.example.kayuho.coen390.R;
+import com.example.kayuho.coen390.Service.OutgoingCallReceiver;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -37,6 +38,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private ArrayList<LatLng> markerPoints;
     private ArrayList<String> directionsList;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        OutgoingCallReceiver newCall = new OutgoingCallReceiver();
+
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
