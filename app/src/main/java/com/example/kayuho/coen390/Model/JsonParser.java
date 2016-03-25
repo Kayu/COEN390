@@ -16,17 +16,15 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
-import javax.net.ssl.HttpsURLConnection;
 //AO test commit...
 /**
  * Created by Kayu on 2016-03-07.
  */
 public class JsonParser extends AsyncTask< String, Void, String>{
-    ProgressDialog dialog;
-    Context current;
-    Direction direction;
+    private ProgressDialog dialog;
+    private Context current;
+    private Direction direction;
 
     public JsonParser(Context context){
         this.current=context;

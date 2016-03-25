@@ -45,12 +45,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerPoints = (ArrayList<LatLng>)bundle.getSerializable("LatLng");
         directionsList = (ArrayList<String>)bundle.getSerializable("Directions");
         setContentView(R.layout.activity_maps);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         ListView directions = (ListView)findViewById(R.id.DirectionListView);
+
         //Replace this with directions to display in list view
         ArrayAdapter<String> directionsAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,directionsList);
         directions.setAdapter(directionsAdapter);
