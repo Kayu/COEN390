@@ -1,12 +1,15 @@
 package com.example.kayuho.coen390.Controller;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
