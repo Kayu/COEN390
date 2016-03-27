@@ -9,18 +9,14 @@
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="Your Address"
-        />
+        android:title="Your Address" />
 
-    <EditTextPreference
-        android:capitalize="words"
-        android:defaultValue="Which Contacts do you wish to Block?"
-        android:key="Blocked_Contacts"
-        android:inputType="textMultiLine"
-        android:lines='5'
-        android:maxLines='5'
-        android:selectAllOnFocus="true"
-        android:title="Blocked Contacts" />
+    <com.example.kayuho.coen390.Model.DeleteAddressConfirmationPreference
+        android:dialogMessage="Are you sure you want to delete the current address assigned to this app?"
+        android:key="delete_address"
+        android:defaultValue="Delete stored address"
+        android:summary="Delete current address"
+        android:title="Delete Address" />
 
 </PreferenceScreen>
 

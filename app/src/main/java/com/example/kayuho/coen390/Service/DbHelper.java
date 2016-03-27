@@ -96,9 +96,7 @@ public class DbHelper extends SQLiteOpenHelper {
     //drop address table all adress table
     public void deleteAll_address(){
         db = this.getWritableDatabase();
-        db.execSQL(DROP_ADDRESS);
-
-        onCreate(db);
+        db.delete(DbContract.AddressEntry.TABLE_NAME, null, null);
         db.close();
 
     }
@@ -107,24 +105,27 @@ public class DbHelper extends SQLiteOpenHelper {
     //insert contact into database (max 5)
     public boolean insert_contact(String name, String num){
 
+
         final String retrieveQuery="SELECT * FROM "+ DbContract.ContactsEntry.TABLE_NAME;
+        db = this.getWritableDatabase();
         Cursor data = db.rawQuery(retrieveQuery,null);
 
         if (data.getCount() <=5){   //makes sure that only 5 entries can be inserted
-            ContentValues values = new ContentValues(2);
-            values.put(DbContract.ContactsEntry.COLUMN_NAME, name);
-            values.put(DbContract.ContactsEntry.COLUMN_NUM,num);
-            db = this.getWritableDatabase();
-            long successful = db.insert(DbContract.ContactsEntry.TABLE_NAME, null, values);
-            db.close();
-            return (successful > 0);}
+                ContentValues values = new ContentValues(2);
+                values.put(DbContract.ContactsEntry.COLUMN_NAME, name);
+                values.put(DbContract.ContactsEntry.COLUMN_NUM,num);
+                long successful = db.insert(DbContract.ContactsEntry.TABLE_NAME, null, values);
+                db.close();
+                return (successful > 0);
+        }
 
-        else return false;
+        db.close();
+        return false;
     }
 
     //retrieve specific contact
     public Cursor getContact(int num){
-        db = this.getWritableDatabase();
+        db = this.getReadableDatabase();
         final String retrieveQuery= "SELECT * FROM"+ DbContract.ContactsEntry.TABLE_NAME
                 + " FROM "+ DbContract.AddressEntry.TABLE_NAME
                 + " WHERE id="+ num;
@@ -142,9 +143,7 @@ public class DbHelper extends SQLiteOpenHelper {
     //drop the contacts table
     public void deleteAll_contacts(){
         db = this.getWritableDatabase();
-        db.execSQL(DROP_CONTACTS);
-
-        onCreate(db);
+        db.delete(DbContract.ContactsEntry.TABLE_NAME, null, null);
         db.close();
 
     }
