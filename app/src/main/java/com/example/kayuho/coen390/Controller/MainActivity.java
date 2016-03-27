@@ -49,17 +49,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*
-        //**********TESTING***************************
-        DatabaseTest = (Button) findViewById(R.id.Test);
-        DatabaseTest.setOnClickListener(new View.OnClickListener(){
-            public void onClick (View v){
-                Intent intent = new Intent (MainActivity.this,DatabaseTest.class);
-                startActivity(intent);
-            }
-        });
-        //*********************************************
-        */
         openGPSSettings();
         GPSServicelistner();
         Button btn_test = (Button)findViewById(R.id.GetHomeButton);

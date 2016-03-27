@@ -61,17 +61,17 @@ public class DbHelper extends SQLiteOpenHelper {
 
     //insert the address into database
     public boolean insert_address(String address){
-
+        db = this.getWritableDatabase(); //get permission to write into the database
         final String retrieveQuery="SELECT * FROM "+ DbContract.AddressEntry.TABLE_NAME;
         Cursor data = db.rawQuery(retrieveQuery,null);
 
         if(data.getCount() <= 1){  //makes sure that there is only one row in address table
-        ContentValues values = new ContentValues(1); //amount of items trying to input into the DB
-        values.put(DbContract.AddressEntry.COLUMN_ADDRESS, address);
-        db = this.getWritableDatabase(); //get permission to write into the database
-        long successful = db.insert(DbContract.AddressEntry.TABLE_NAME, null, values);
-        db.close(); // close the connection to the database -- opened during getWritabableDatabase();
-        return (successful > 0);}
+            ContentValues values = new ContentValues(1); //amount of items trying to input into the DB
+            values.put(DbContract.AddressEntry.COLUMN_ADDRESS, address);
+            long successful = db.insert(DbContract.AddressEntry.TABLE_NAME, null, values);
+            db.close(); // close the connection to the database -- opened during getWritabableDatabase();
+            return (successful > 0);
+        }
 
         else return false;
     }

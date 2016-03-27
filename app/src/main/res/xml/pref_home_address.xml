@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <EditTextPreference
-    android:capitalize="words"
-    android:defaultValue="Please Enter a Valid Address"
-    android:inputType="textCapWords"
-    android:key="set_address"
-    android:maxLines="1"
-    android:selectAllOnFocus="true"
-    android:singleLine="true"
-    android:title="Your Address" />
+    <!-- call the custom preference from the Model. The format is package.customPreferenceClassName -->
+    <com.example.kayuho.coen390.Model.AddressEditTextPreference
+        android:capitalize="words"
+        android:defaultValue="Please Enter a Valid Address"
+        android:inputType="textCapWords"
+        android:key="set_address"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Your Address"
+        />
 
     <EditTextPreference
         android:capitalize="words"
@@ -21,3 +23,4 @@
         android:title="Blocked Contacts" />
 
 </PreferenceScreen>
+
