@@ -2,7 +2,9 @@ package com.example.kayuho.coen390.Model;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.preference.EditTextPreference;
+import android.preference.Preference;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.Toast;
@@ -43,10 +45,13 @@ public class AddressEditTextPreference extends EditTextPreference {
         // THis if statement checks the clicked button is OK or cancel
         //In this case it is checking to see if the Ok button was clicked
         if (option == DialogInterface.BUTTON_POSITIVE) {
+
             //create an EditTextPreference object
             EditTextPreference pref_address = (EditTextPreference)findPreferenceInHierarchy("set_address");
+
             //Get the text from the edit text
             String address = pref_address.getText().toString();
+            db.deleteAll_address();
             Log.i("address: ",address);
             //call the insert address method in the DbHelper
             db.insert_address(address);
@@ -55,4 +60,7 @@ public class AddressEditTextPreference extends EditTextPreference {
         super.onClick(dialog, option);
     }
 
+
 }
+
+
