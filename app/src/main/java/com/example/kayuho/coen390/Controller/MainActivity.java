@@ -64,12 +64,11 @@ public class MainActivity extends AppCompatActivity {
                 Cursor adressData = data.getAddress();
 
                 adressData.moveToNext();
-                String fvg = adressData.getString(0);
+                String arrival = adressData.getString(0);
                 //adressData.getString(0));
-                fvg = fvg.replaceAll(" ","");
+                arrival = arrival.replaceAll(" ","");
                 String depart = lat.toString()+","+lon.toString();
-                String arrival = "1087Duguay";
-                arrival = fvg;
+                //String arrival = "1087Duguay";
                 UrlString url = new UrlString(MainActivity.this, depart, arrival);
                 JsonParser getTransitDirection = new JsonParser(MainActivity.this);
                 Direction transitDirection;
