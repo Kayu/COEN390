@@ -6,7 +6,9 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.GpsSatellite;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         btn_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String depart = lat.toString()+","+lon.toString();
+                String depart = lat.toString() + "," + lon.toString();
                 String arrival = "1087Duguay";
                 UrlString url = new UrlString(MainActivity.this, depart, arrival);
                 JsonParser getTransitDirection = new JsonParser(MainActivity.this);
@@ -163,15 +165,56 @@ public class MainActivity extends AppCompatActivity {
 
             Location location =  myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             MyLocListener loc = new MyLocListener();
-            myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 6000, 10, loc);
+            updateWithNewLocation(location);
+            myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 6000, 10, new MyLocListener());
+
+
             lat = location.getLatitude();
             lon = location.getLongitude();
 
             Log.i("latitude", lat.toString());
-            Log.i("longitude", lon.toString() );
+            Log.i("longitude", lon.toString());
+
+
+
         }
 
     }
 
+    private void updateWithNewLocation(Location location) {
+    }
+    public class MyLocListener implements LocationListener {
+
+        @Override
+        public void onLocationChanged(Location location) {
+            if (location != null)
+            {
+
+                lon = location.getLongitude();
+                lat = location.getLatitude();
+                Log.i("latitude", lat.toString());
+                Log.i("longitude", lon.toString());
+
+
+            }
+        }
+
+
+
+        @Override
+        public void onProviderEnabled(String provider){
+        }
+
+        @Override
+        public void onProviderDisabled(String provider){
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras){
+        }
+
+
+    }
+    private boolean getService = false;
 }
 

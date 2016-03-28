@@ -15,8 +15,8 @@ public class MyLocListener implements LocationListener {
         if (location != null)
         {
 
-            Double longitude = location.getLongitude();
-            Double latitude = location.getLatitude();
+            Double lon = location.getLongitude();
+            Double lat = location.getLatitude();
 
         }
     }
@@ -36,4 +36,9 @@ public class MyLocListener implements LocationListener {
     }
 
 
-}
+    }
+
+
+
+
+
