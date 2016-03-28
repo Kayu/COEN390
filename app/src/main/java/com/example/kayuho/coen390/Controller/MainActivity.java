@@ -147,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
     }
 //after setting
 
-
     protected void GPSServicelistner() {
         new MyLocListener();
         LocationManager myManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -215,6 +214,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    private boolean getService = false;
 }
 
