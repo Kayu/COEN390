@@ -50,4 +50,10 @@
         android:layout_below="@+id/TaxiButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="42dp"
+        android:id="@+id/Test2"/>
 </RelativeLayout>

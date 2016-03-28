@@ -36,6 +36,7 @@ public class DeleteAddressConfirmationPreference extends DialogPreference {
     public void onClick(DialogInterface dialog, int option) {
         if (option == DialogInterface.BUTTON_POSITIVE) {
             db.deleteAll_address();
+            db.deleteAll_address();
         }
 
         super.onClick(dialog, option);

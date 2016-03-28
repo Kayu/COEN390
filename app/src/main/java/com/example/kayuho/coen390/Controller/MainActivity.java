@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import com.example.kayuho.coen390.Model.Direction;
 import com.example.kayuho.coen390.Model.JsonParser;
 import com.example.kayuho.coen390.Model.MyLocListener;
+import com.example.kayuho.coen390.Service.DbHelper;
 import com.example.kayuho.coen390.Service.OutgoingCallReceiver;
 import com.example.kayuho.coen390.Model.UrlString;
 import com.example.kayuho.coen390.R;
@@ -58,8 +60,16 @@ public class MainActivity extends AppCompatActivity {
         btn_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DbHelper data = new DbHelper(MainActivity.this);
+                Cursor adressData = data.getAddress();
+
+                adressData.moveToNext();
+                String fvg = adressData.getString(0);
+                //adressData.getString(0));
+                fvg = fvg.replaceAll(" ","");
                 String depart = lat.toString()+","+lon.toString();
                 String arrival = "1087Duguay";
+                arrival = fvg;
                 UrlString url = new UrlString(MainActivity.this, depart, arrival);
                 JsonParser getTransitDirection = new JsonParser(MainActivity.this);
                 Direction transitDirection;

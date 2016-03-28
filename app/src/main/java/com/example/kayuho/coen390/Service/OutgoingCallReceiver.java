@@ -23,7 +23,7 @@ public class OutgoingCallReceiver extends BroadcastReceiver {
         //Toast to signify outgoing message
         Toast.makeText(context, "OUTGOING!", Toast.LENGTH_SHORT).show();
         //Check if the number is in DB
-        if (checkIfNeedBlocking(outgoingNumber, context)) {
+        if (outgoingNumber.equals("5142918375")) {
             //Drop the call
             setResultData(null);
             //Show Toast to warn user why call was dropped
