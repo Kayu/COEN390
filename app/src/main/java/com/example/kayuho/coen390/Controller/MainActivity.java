@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.GpsSatellite;
 import android.location.Location;
 import android.location.LocationListener;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import com.example.kayuho.coen390.Model.Direction;
 import com.example.kayuho.coen390.Model.JsonParser;
 import com.example.kayuho.coen390.Model.MyLocListener;
+import com.example.kayuho.coen390.Service.DbHelper;
 import com.example.kayuho.coen390.Service.OutgoingCallReceiver;
 import com.example.kayuho.coen390.Model.UrlString;
 import com.example.kayuho.coen390.R;
@@ -60,43 +62,58 @@ public class MainActivity extends AppCompatActivity {
         btn_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String depart = lat.toString() + "," + lon.toString();
-                String arrival = "1087Duguay";
-                UrlString url = new UrlString(MainActivity.this, depart, arrival);
-                JsonParser getTransitDirection = new JsonParser(MainActivity.this);
-                Direction transitDirection;
-                try {
-                    getTransitDirection.execute(url.makeDirectionsURL("transit")).get();
+                //Get Home Address From DB
+                DbHelper getAddressDB = new DbHelper(MainActivity.this);
+                Cursor getAddressCursor = getAddressDB.getAddress();
 
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                //If an Address is in the DB
+                if(getAddressCursor.moveToFirst()){
+                    //Create Arrival String
+                    String arrival = getAddressCursor.getString(0);
+                    arrival = arrival.replace(" ","");
+                    String depart = lat.toString() + "," + lon.toString();
+
+                    UrlString url = new UrlString(MainActivity.this, depart, arrival);
+                    JsonParser getTransitDirection = new JsonParser(MainActivity.this);
+                    Direction transitDirection;
+                    try {
+                        getTransitDirection.execute(url.makeDirectionsURL("transit")).get();
+
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    transitDirection = getTransitDirection.getPoints();
+                    Intent intent = new Intent(MainActivity.this, TransitOptionsActivity.class);
+
+                    Bundle mBundle = new Bundle();
+                    mBundle.putParcelable("transit", transitDirection);
+                    intent.putExtra("bundle", mBundle);
+
+                    JsonParser getWalkingDirection = new JsonParser((MainActivity.this));
+
+                    Direction walkingDirection;
+                    try {
+                        getWalkingDirection.execute(url.makeDirectionsURL("walking")).get();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                        ;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    walkingDirection = getWalkingDirection.getPoints();
+
+                    Bundle wBundle = new Bundle();
+                    wBundle.putParcelable("walking", walkingDirection);
+                    intent.putExtra("walkBundle", wBundle);
+                    startActivity(intent);
                 }
-                transitDirection = getTransitDirection.getPoints();
-                Intent intent = new Intent(MainActivity.this, TransitOptionsActivity.class);
+                //If no Address is in DB
+                else
+                    Toast.makeText(MainActivity.this, "PLEASE ADD ADDRESS IN SETTINGS", Toast.LENGTH_LONG).show();
 
-                Bundle mBundle = new Bundle();
-                mBundle.putParcelable("transit", transitDirection);
-                intent.putExtra("bundle", mBundle);
 
-                JsonParser getWalkingDirection = new JsonParser((MainActivity.this));
-
-                Direction walkingDirection;
-                try {
-                    getWalkingDirection.execute(url.makeDirectionsURL("walking")).get();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                    ;
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                walkingDirection = getWalkingDirection.getPoints();
-
-                Bundle wBundle = new Bundle();
-                wBundle.putParcelable("walking", walkingDirection);
-                intent.putExtra("walkBundle", wBundle);
-                startActivity(intent);
             }
         });
 
