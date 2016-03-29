@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -27,9 +28,10 @@ import android.widget.Toast;
 
 import com.example.kayuho.coen390.Model.Direction;
 import com.example.kayuho.coen390.Model.JsonParser;
+
 import com.example.kayuho.coen390.Model.MyLocListener;
 import com.example.kayuho.coen390.Service.DbHelper;
-import com.example.kayuho.coen390.Service.OutgoingCallReceiver;
+
 import com.example.kayuho.coen390.Model.UrlString;
 import com.example.kayuho.coen390.R;
 
@@ -39,9 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
     //Testing
     Button DatabaseTest;  //Testing the database
-    Double lat,lon;
+    Double latitude,longitude;
     private LocationManager locationManager;
-
+    private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1234;
+    private MyLocListener gpsListener;
     @Override
     protected void onPause() {
         super.onPause();
@@ -55,23 +58,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        openGPSSettings();
-        GPSServicelistner();
-        Button btn_test = (Button)findViewById(R.id.GetHomeButton);
-        btn_test.setOnClickListener(new View.OnClickListener() {
+        //openGPSSettings();
+        //GPSServicelistner();
+        final boolean gpsPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        Button btn_getHome = (Button) findViewById(R.id.GetHomeButton);
+        btn_getHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                gpsListener = new MyLocListener(MainActivity.this, gpsPermission);
+                if (gpsListener.ableToAccessLocation()) {
+                    latitude = gpsListener.getLatitude();
+                    longitude = gpsListener.getLongitude();
+                } else {
+                    gpsListener.showAlert();
+                }
+
                 //Get Home Address From DB
                 DbHelper getAddressDB = new DbHelper(MainActivity.this);
                 Cursor getAddressCursor = getAddressDB.getAddress();
 
                 //If an Address is in the DB
-                if(getAddressCursor.moveToFirst()){
+                if (getAddressCursor.moveToFirst()) {
                     //Create Arrival String
                     String arrival = getAddressCursor.getString(0);
-                    arrival = arrival.replace(" ","");
-                    String depart = lat.toString() + "," + lon.toString();
+                    arrival = arrival.replace(" ", "");
+                    //arrival = "1087Duguay";
+                    String depart = latitude.toString() + "," + longitude.toString();
 
                     UrlString url = new UrlString(MainActivity.this, depart, arrival);
                     JsonParser getTransitDirection = new JsonParser(MainActivity.this);
@@ -116,9 +129,55 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+/*
+        Button button = (Button) this.findViewById(R.id.TaxiButton);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+                    return;
+                } else {
+                    callPhone();
+                }
+            }
+
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CALL_PHONE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    callPhone();
+                }
+                else{
+                    Toast.makeText(MainActivity.this, "PHONE_CALL Denied", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+            default:super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    private void callPhone()
+    {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:15146272011"));
+        try {
+            startActivity(callIntent);
+        }
+        catch(SecurityException e){
+            e.printStackTrace();
+        }
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -143,93 +202,7 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+*/
 
-
-    // check if GPS is turned on
-
-    private void openGPSSettings() {
-        LocationManager alm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        if (alm.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
-            Toast.makeText(this, "GPS is on", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        Toast.makeText(this, "Please open the GPS！", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
-        startActivityForResult(intent,0);
-        //after setting
-
-
-    }
-//after setting
-
-    protected void GPSServicelistner() {
-        new MyLocListener();
-        LocationManager myManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        //Location location =  myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        boolean test = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-
-        if ( test) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details
-
-            Location location =  myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            MyLocListener loc = new MyLocListener();
-            updateWithNewLocation(location);
-            myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 6000, 10, new MyLocListener());
-
-
-            lat = location.getLatitude();
-            lon = location.getLongitude();
-
-            Log.i("latitude", lat.toString());
-            Log.i("longitude", lon.toString());
-
-
-
-        }
-
-    }
-
-    private void updateWithNewLocation(Location location) {
-    }
-    public class MyLocListener implements LocationListener {
-
-        @Override
-        public void onLocationChanged(Location location) {
-            if (location != null)
-            {
-
-                lon = location.getLongitude();
-                lat = location.getLatitude();
-                Log.i("latitude", lat.toString());
-                Log.i("longitude", lon.toString());
-
-
-            }
-        }
-
-
-
-        @Override
-        public void onProviderEnabled(String provider){
-        }
-
-        @Override
-        public void onProviderDisabled(String provider){
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras){
-        }
-
-
-    }
 }
 
