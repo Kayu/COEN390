@@ -2,16 +2,11 @@ package com.example.kayuho.coen390.Model;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.preference.EditTextPreference;
-import android.preference.Preference;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.kayuho.coen390.Controller.MainActivity;
 import com.example.kayuho.coen390.Service.DbHelper;
 
 /**
@@ -48,40 +43,23 @@ public class AddressEditTextPreference extends EditTextPreference {
         // THis if statement checks the clicked button is OK or cancel
         //In this case it is checking to see if the Ok button was clicked
         if (option == DialogInterface.BUTTON_POSITIVE) {
-
-
-            Cursor getAddressCursor = db.getAddress();
-
             //create an EditTextPreference object
-            final EditTextPreference pref_address = (EditTextPreference) findPreferenceInHierarchy("set_address");
-            //Create EditText Object to Get Text
-            EditText getAddress = pref_address.getEditText();
-            //GetText
-            String address = getAddress.getText().toString();
-
-            //If Address Already in DB
-            if(getAddressCursor.moveToFirst()){
-
-                //Delete Current Address From DB
-                db.deleteAll_address();
-                //Add New Address to DB
-                db.insert_address(address);
-                Log.i("address", address);
-
+            EditTextPreference pref_address = (EditTextPreference)findPreferenceInHierarchy("set_address");
+            //Get the text from the edit text
+            String address = pref_address.getText().toString();
+            Log.i("address: ",address);
+            //call the insert address method in the DbHelper
+            boolean inserted = db.insert_address(address);
+            //launches a message to the user if data was added or if already exists
+            if(inserted){
+                Toast.makeText(mContext, "Data Inserted", Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(mContext, "You already have an address", Toast.LENGTH_LONG).show();
 
             }
-            //If DB Address is Empty
-            else{
-                //Insert Address Into DB
-                db.insert_address(address);
-                Log.i("address", address);
-            }
-
         }
 
         super.onClick(dialog, option);
     }
 
 }
-
-
