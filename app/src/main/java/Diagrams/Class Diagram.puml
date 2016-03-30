@@ -1,0 +1,31 @@
+@startuml
+
+package "Controller"{
+class AppCompatPreferenceActivity
+class MainActivity
+class MainActivityFragment
+class MapsActivity
+class SettingsActivity
+class TransitOptionsActivity
+}
+
+package "Model"{
+class AddressEditTextPreference
+class BlockedContactsEditTextPreference
+class DeleteAddressConfirmationPreference
+class DeleteBlockedContactsConfirmation
+class Direction
+class JsonParser
+class UrlString
+}
+
+package "Service"{
+class DbContract
+class AddressEntry <<Static>>
+class COntactsEntry <<Static>>
+class DbHelper
+class MyLocListener
+class OutgoingCallReceiver
+}
+@enduml
+

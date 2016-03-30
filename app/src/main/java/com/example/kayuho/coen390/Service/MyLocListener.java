@@ -1,4 +1,4 @@
-package com.example.kayuho.coen390.Model;
+package com.example.kayuho.coen390.Service;
 
 import android.Manifest;
 import android.accounts.NetworkErrorException;
@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 /**
  * Created by zhou on 2016/3/9.
+ * fixed and modified to work by Ka Yu
  */
 public class MyLocListener extends Service implements LocationListener {
 
@@ -51,16 +52,14 @@ public class MyLocListener extends Service implements LocationListener {
 
         NetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         GPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        Activity activity = (Activity)context;
-//        hasPermission = (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
 
         if(!hasPermission){
-            Toast.makeText(this, "GPS permission require", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "GPS permission required", Toast.LENGTH_LONG).show();
             return null;
         }
 
         if(!NetworkEnabled && !GPSEnabled){
-            Toast.makeText(this, "GPS or Network not available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "GPS or Network not available", Toast.LENGTH_LONG).show();
             return null;
         }
         else

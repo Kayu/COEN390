@@ -1,25 +1,16 @@
 package com.example.kayuho.coen390.Controller;
 
 import android.Manifest;
-import android.annotation.TargetApi;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.location.GpsSatellite;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +20,7 @@ import android.widget.Toast;
 import com.example.kayuho.coen390.Model.Direction;
 import com.example.kayuho.coen390.Model.JsonParser;
 
-import com.example.kayuho.coen390.Model.MyLocListener;
+import com.example.kayuho.coen390.Service.MyLocListener;
 import com.example.kayuho.coen390.Service.DbHelper;
 
 import com.example.kayuho.coen390.Model.UrlString;
@@ -125,8 +116,6 @@ public class MainActivity extends AppCompatActivity {
                 //If no Address is in DB
                 else
                     Toast.makeText(MainActivity.this, "PLEASE ADD ADDRESS IN SETTINGS", Toast.LENGTH_LONG).show();
-
-
             }
         });
 
@@ -156,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                     callPhone();
                 }
                 else{
-                    Toast.makeText(MainActivity.this, "PHONE_CALL Denied", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "PHONE_CALL Denied", Toast.LENGTH_LONG).show();
                 }
                 break;
             }
