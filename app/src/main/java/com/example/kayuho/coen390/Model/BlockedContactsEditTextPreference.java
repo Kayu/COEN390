@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.preference.EditTextPreference;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.kayuho.coen390.Service.DbHelper;
@@ -46,32 +47,40 @@ public class BlockedContactsEditTextPreference extends EditTextPreference {
         if (option == DialogInterface.BUTTON_POSITIVE) {
 
             Cursor getContactCursor = db.getAllData_contacts();
+            boolean result = true;
 
             //create an EditTextPreference object
             EditTextPreference pref_blocked_number = (EditTextPreference)findPreferenceInHierarchy("blocked_contacts");
-            //Get the text from the edit text
-            String BlockedContactNum = pref_blocked_number.getText().toString();
 
+            EditText blockEditText = pref_blocked_number.getEditText();
+            //Get the text from the edit text
+            String BlockedContactNum = blockEditText.getText().toString();
             //First check to see if there is space in the database for another contact
                 if (getContactCursor.getCount() == 5)
                 {
-                    Toast.makeText(mContext,"Too Many Blocked Contacts. Please Delete to enter a new one", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext,"Too Many Blocked Contacts. Please Delete to enter a new one", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 // If there is space, incrementally check the database to ensure the contact is not already there
                 else if (getContactCursor.getCount() < 5) {
                     while (getContactCursor.moveToNext()) {
-                        if (getContactCursor.getString(2) == BlockedContactNum) {
-                            Toast.makeText(mContext, "This Contact is Already Blocked", Toast.LENGTH_SHORT).show();
-                            return;
+                        if (getContactCursor.getString(2).equals(BlockedContactNum)) {
+                            Toast.makeText(mContext, "This Contact is Already Blocked", Toast.LENGTH_LONG).show();
+                            result = false;
+                            break;
                         }
                     }
+                    if(result){
+                        db.insert_contact(BlockedContactNum);
+                        Toast.makeText(mContext,"Contact Inserted", Toast.LENGTH_LONG).show();
+                    }
+
                 }
                 //If there is space and no reccurance, add contact to dB
-                else Log.i("Blocked Number: ", BlockedContactNum);
+                else {Log.i("Blocked Number: ", BlockedContactNum);
                 //call the insert address method in the DbHelper
-                db.insert_contact(BlockedContactNum);
+                db.insert_contact(BlockedContactNum);}
             }
         super.onClick(dialog, option);
     }

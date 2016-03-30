@@ -7,6 +7,7 @@ import android.preference.DialogPreference;
 import android.preference.EditTextPreference;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.kayuho.coen390.Service.DbHelper;
 
@@ -15,6 +16,7 @@ import com.example.kayuho.coen390.Service.DbHelper;
  */
 public class DeleteAddressConfirmationPreference extends DialogPreference {
     private DbHelper db;
+    private Context mContext;
 
 
     public DeleteAddressConfirmationPreference(Context context, AttributeSet attrs) {
@@ -22,6 +24,7 @@ public class DeleteAddressConfirmationPreference extends DialogPreference {
         super(context, attrs);
         db = new DbHelper(context);
         this.setDefaultValue("Delete stored address");
+        mContext = context;
     }
 
 /*
@@ -36,7 +39,7 @@ public class DeleteAddressConfirmationPreference extends DialogPreference {
     public void onClick(DialogInterface dialog, int option) {
         if (option == DialogInterface.BUTTON_POSITIVE) {
             db.deleteAll_address();
-            db.deleteAll_address();
+            Toast.makeText(mContext,"All Contacts Unblocked",Toast.LENGTH_LONG).show();
         }
 
         super.onClick(dialog, option);

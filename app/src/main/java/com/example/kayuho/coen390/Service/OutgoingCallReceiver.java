@@ -23,7 +23,7 @@ public class OutgoingCallReceiver extends BroadcastReceiver {
         //Toast to signify outgoing message
         Toast.makeText(context, "OUTGOING!", Toast.LENGTH_SHORT).show();
         //Check if the number is in DB
-        if (outgoingNumber.equals("5142918375")) {
+        if (checkIfNeedBlocking(outgoingNumber,context)) {
             //Drop the call
             setResultData(null);
             //Show Toast to warn user why call was dropped
@@ -45,13 +45,18 @@ public class OutgoingCallReceiver extends BroadcastReceiver {
         Cursor dbEntries = getContacts.getAllData_contacts();
 
         //If move is successful
-        if (dbEntries.moveToFirst()) {
 
+            while (dbEntries.moveToNext()) {
+                if (dbEntries.getString(2).equals(outgoingNumber)) {
+                    Toast.makeText(context, "This Contact is Already Blocked", Toast.LENGTH_LONG).show();
+                    result = true;
+                    break;
+                }
             //Get data from "phone_num" column
-            for (int i = 0; i < 4; i++) {
+            /*for (int i = 0; i < 5; i++) {
 
                 //Access entry and convert to string
-                contactInDB = dbEntries.getString(dbEntries.getColumnIndex("phone_num"));
+                contactInDB = dbEntries.getString(2);
 
                 //Compare the outgoing number to DB contact numbers
                 if (outgoingNumber.equals(contactInDB)) {
@@ -66,7 +71,7 @@ public class OutgoingCallReceiver extends BroadcastReceiver {
                 }
 
 
-            }
+            }*/
         }
 
         return result;

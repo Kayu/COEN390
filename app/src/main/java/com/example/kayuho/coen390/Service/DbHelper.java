@@ -136,7 +136,6 @@ public class DbHelper extends SQLiteOpenHelper {
         db = this.getReadableDatabase();  //open connection to DB
         final String retrieveQuery="SELECT * FROM "+ DbContract.ContactsEntry.TABLE_NAME;
         Cursor data = db.rawQuery(retrieveQuery, null);
-        db.close(); //close connection to DB
         return data;
     }
     //drop the contacts table

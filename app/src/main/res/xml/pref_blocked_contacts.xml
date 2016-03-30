@@ -13,7 +13,7 @@
         android:singleLine="true"
         android:title="Add Number of Contact to Block"/>
 
-    <com.example.kayuho.coen390.Model.BlockedContactsEditTextPreference
+    <com.example.kayuho.coen390.Model.DeleteBlockedContactConfirmationPreference
         android:dialogMessage="Are you sure you want to remove the following number from the blocked list?"
         android:key="delete_blocked_contact"
         android:defaultValue="Delete blocked contact"
