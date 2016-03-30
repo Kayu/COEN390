@@ -10,14 +10,13 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 
@@ -169,7 +168,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
                 || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName)
-                || AddressPreferenceFragment.class.getName().equals(fragmentName);
+                || AddressPreferenceFragment.class.getName().equals(fragmentName)
+                || BlockedContactsPreferenceFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -279,6 +279,35 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("set_address"));
             bindPreferenceSummaryToValue(findPreference("delete_address"));
            }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class BlockedContactsPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_blocked_contacts);
+            PreferenceManager.setDefaultValues(getActivity(), R.xml.pref_blocked_contacts, false);
+            setHasOptionsMenu(true);
+
+            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+            // to their values. When their values change, their summaries are
+            // updated to reflect the new value, per the Android Design
+            // guidelines.
+            bindPreferenceSummaryToValue(findPreference("blocked_contacts"));
+            bindPreferenceSummaryToValue(findPreference("delete_blocked_contact"));
+        }
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {

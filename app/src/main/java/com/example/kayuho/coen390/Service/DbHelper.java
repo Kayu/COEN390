@@ -93,7 +93,7 @@ public class DbHelper extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(retrieveQuery,null);
         return data;
     }
-    //drop address table all adress table
+    //drop address table all address table
     public void deleteAll_address(){
         db = this.getWritableDatabase();
         db.delete(DbContract.AddressEntry.TABLE_NAME, null, null);
@@ -102,8 +102,8 @@ public class DbHelper extends SQLiteOpenHelper {
     }
     //------------------------CONTACTS--------------------------------------
 
-    //insert contact into database (max 5)
-    public boolean insert_contact(String name, String num){
+    //insert contact into database (max 5) && tried eliminating use of name. In my file in only uses phone number
+    public boolean insert_contact(String num){
 
 
         final String retrieveQuery="SELECT * FROM "+ DbContract.ContactsEntry.TABLE_NAME;
@@ -112,7 +112,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
         if (data.getCount() <=5){   //makes sure that only 5 entries can be inserted
                 ContentValues values = new ContentValues(2);
-                values.put(DbContract.ContactsEntry.COLUMN_NAME, name);
                 values.put(DbContract.ContactsEntry.COLUMN_NUM,num);
                 long successful = db.insert(DbContract.ContactsEntry.TABLE_NAME, null, values);
                 db.close();
