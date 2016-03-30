@@ -1,31 +1,247 @@
 @startuml
 
 package "Controller"{
-class AppCompatPreferenceActivity
-class MainActivity
-class MainActivityFragment
-class MapsActivity
-class SettingsActivity
-class TransitOptionsActivity
+    class AppCompatPreferenceActivity{
+        - mDelegate: AppCompatDelegate
+        # onCreate (savedInstanceState: Bundle)
+        # onPostCreate (savedInstanceState: Bundle)
+        + getSupportActionBar () : ActionBar
+        + setSupportActionBar (toolbar: Toolbar)
+        + getMenuInflater () : MenuInflater
+        + setContentView (layoutResID: int)
+        + setContentView (view: View)
+        + setContentView (view: View, params: LayoutParams
+        + addContentView (view: View, params: LayoutParams)
+        # onPostResume ()
+        # onTitleChanged (title: CharSequence, color: int)
+        + onConfigurationChanged (newConfig: Configuration)
+        # onStop ()
+        # onDestroy ()
+        + invalidateOptionsMenu ()
+        - getDelegate () : AppCompatDelegate
+    }
+
+    class MainActivity{
+         - DatabaseTest: Button
+         - latutude, longitude: Double
+         - locationManager: LocationManager
+         - {static} MY_PERMISSIONS_REQUEST_CALL_PHONE: int
+         - gpsListener: MyLocListener
+         # onPause ()
+         # onCreate (savedInstanceState: Bundle)
+    }
+
+    class MainActivityFragment{
+        + MainActivityFragment ()
+        + onCreateView (inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) : View
+    }
+
+    class MapsActivity{
+        - mMap: GoogleMap
+        - markerPoints: ArrayList<LatLng>
+        - directionsList: ArrayList<String>
+        # onPause ()
+        # onCreate (savedInstanceState: Bundle)
+        + onMapReady (googleMap: GoogleMap)
+    }
+
+    class SettingsActivity{
+        - {static} sBindPreferenceSummaryToValueListener: OnPreferenceChangeListener
+        - db: DbHelper
+        - {static}isXLargeTablet (context: Context) : boolean
+        - {static}bindPreferenceSummaryToValue (preference: Preference)
+        # onCreate (savedInstanceState: Bundle)
+        - setupActionBar ()
+        + onIsMultiPane () : boolean
+        # isValidFragment (fragmentName: String) boolean
+    }
+
+    class TransitOptionsActivity{
+        # onPause ()
+        # onCreate (savedInstanceState: Bundle)
+    }
+
+    class AddressPreferenceFragment <<static>> {
+        + onCreate(savedInstanceState: Bundle)
+        + onOptionsItemSelected (item: MenuItem) : boolean
+    }
+
+    class BlockedContactsPreferenceFragment<<static>> {
+        + onCreate(savedInstanceState: Bundle)
+        + onOptionsItemSelected (item: MenuItem) : boolean
+    }
 }
 
 package "Model"{
-class AddressEditTextPreference
-class BlockedContactsEditTextPreference
-class DeleteAddressConfirmationPreference
-class DeleteBlockedContactsConfirmation
-class Direction
-class JsonParser
-class UrlString
+    class AddressEditTextPreference{
+        - db: DbHelper
+        # mContext: Context
+        + AddressEditTextPreference(context: Context) <<contructor>>
+        + AddressEditTextPreference(context: Context,  attrs: AttributeSet) <<contructor>>
+        + AddressEditTextPreference(context: Context,  attrs: AttributeSet, defStyle: int) <<contructor>>
+        + onClick(dialog: DialogInterface, option: int)
+    }
+
+    class BlockedContactsEditTextPreference{
+        - db: DbHelper
+        # mContext: Context
+        + AddressEditTextPreference(context: Context , attrs: AttributeSet)
+        + onClick(dialog: DialogInterface, option: int)
+    }
+
+    class DeleteAddressConfirmationPreference{
+        - db: dbHelper
+        + DeleteAddressConfirmationPreference(context: Context , attrs: AttributeSet)
+        + onClick(dialog: DialogInterface, option: int)
+    }
+
+    class DeleteBlockedContactsConfirmationPreference{
+         - db: dbHelper
+         + DeleteBlockedContactsConfirmation(context: Context , attrs: AttributeSet)
+         + onClick(dialog: DialogInterface, option: int)
+    }
+
+    class Direction{
+         - points: ArrayList<LatLng>
+         - directions: ArrayList<String>
+         - duration: String
+         - distance: String
+         + {static}CREATOR: Creator<Direction>
+         + Direction (parcel:Parcel)<<constructor>>
+         + Direction (points: ArrayList<LatLng>, duration: String, distance: String) <<constructor>>
+         + getPoints () : ArrayList<LatLng>
+         + getDirections () : ArrayList<String>
+         + getDuration () : String
+         + getDistance () : String
+         + describeContents() : int
+         + writeToParcel (dest: Parcel, flags: int)
+    }
+
+    class CREATOR{
+        + createFromParcel (source: Parcel) : Direction <<constructor>>
+        + newArray (size: int) : int [ ]
+    }
+
+    class JsonParser{
+        - dialog: ProgressDialog
+        - current: Context
+        - direction: Direction
+        + JsonParser (context: Context)
+        # onPreExecute ()
+        # onPostExecute ()
+        # doInBackgroud (params: String) : String
+        - decodePolyline (encoded: String) : ArrayList<LatLng>
+        + getPoints () : Direction
+    }
+
+    class UrlString{
+        - from: String
+        - to: String
+        - googleMapKey: String
+        - url: StringBuilder
+        + UrlString (context: Context, from: String, to: String)
+        + makeDirectionsURL (transportType: String) : String
+    }
 }
 
 package "Service"{
-class DbContract
-class AddressEntry <<Static>>
-class COntactsEntry <<Static>>
-class DbHelper
-class MyLocListener
-class OutgoingCallReceiver
+    class DbContract{
+
+    }
+
+    class AddressEntry <<Static>>{
+        + {static}  TABLE_NAME: String
+        + {static} COLUMN_NAME: String
+        + {static} COLUMN_NUM: String
+    }
+
+    class ContactsEntry <<Static>>{
+        + {static} TABLE_NAME: String
+        + {static} COLUMN_FACT: String
+    }
+
+    class DbHelper{
+        - {static}  DATABASE_NAME: String
+        - {static}  DATABASE_VERSION: int
+        - DROP_ADDRESS: String
+        - DROP_CONTACTS: String
+        - ContactsTable: String
+        - AddressTable: String
+        - db: SQLiteDatabase
+        + DbHelper (context: Context)
+        + onCreate (db: SQLiteDatabase)
+        + onUpgrade (db: SQLiteDatabase, oldVersion: int, newVersion: int)
+        + insert_address (address: String) : boolean
+        + getAllData_address () : Cursor
+        + getAddress () : Cursor
+        + deleteAll_address ()
+        + insert_contact (name: String, num: String)
+        + getContact (num: int) : Cursor
+        + getAllData_contacts () : Cursor
+        + deleteAllData_contacts () : Cursor
+        + deleteAll_contacts ()
+        + getDBVersion () : int
+    }
+
+    class MyLocListener{
+         - context: Context
+         - GPSEnabled: boolean
+         - NetworkEnabled: boolean
+         - accessLocation: boolean
+         - hasPermission: boolean
+         - location: Location
+         - latitude: double
+         - longitude: double
+         - {static} MIN_DISTANCE: long
+         - {static} MIN_TIME_UPDATE: long
+         - locationManager: LocationManager
+         + MyLocListener (context: Context, gpsPermission : boolean
+         + getLocation () : Location
+         + getLongitude () : double
+         + getLongitude () : double
+         + ableToAccessLocation () : boolean
+         + setPermission (permission: boolean)
+         + showAlert ()
+         + onLocationChanged (location: Location)
+         + onProviderDisabled (provider: String)
+         + onProviderEnabled (provider: String)
+         + onStatusChanged (provider: String, status: int, extras: Bundle)
+         + onBind (arg0: Intent) : IBinder
+    }
+
+    class OutgoingCallReceiver{
+         + onReceive (context: Context, intent: Intent)
+         + checkIfNeedBlocking (outgoingNumber: String, context: Context)
+    }
 }
+
+SettingsActivity o-- AddressPreferenceFragment
+SettingsActivity o-- BlockedContactsPreferenceFragment
+
+AddressEditTextPreference <..AddressPreferenceFragment
+DeleteAddressConfirmationPreference <..AddressPreferenceFragment
+
+BlockedContactsEditTextPreference <..BlockedContactsPreferenceFragment
+DeleteBlockedContactsConfirmationPreference <..BlockedContactsPreferenceFragment
+
+DbContract o-- AddressEntry
+DbContract o-- ContactsEntry
+DbContract <.. DbHelper
+
+DbHelper <-- MainActivity
+DbHelper <-- SettingsActivity
+
+Direction ..>CREATOR
+
+JsonParser ..>Direction
+MainActivity --Direction
+MainActivity ..>UrlString
+MainActivity ..>MyLocListener
+MainActivity -- TransitOptionsActivity
+MainActivity..>JsonParser
+MainActivity--MainActivityFragment
+TransitOptionsActivity -- MapsActivity
+MainActivity -- SettingsActivity
+OutgoingCallReceiver<--MainActivity
 @enduml
 

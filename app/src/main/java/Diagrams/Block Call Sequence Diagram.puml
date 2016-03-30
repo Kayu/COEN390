@@ -1,0 +1,10 @@
+@startuml
+MainActivity-->MainActivity:onPause()
+MainActivity-->OutgoingCallReceiver:create new OutgoingCallReceiver()
+OutgoingCallReceiver-->OutgoingCallReceiver:onReceive()
+OutgoingCallReceiver-->OutgoingCallReceiver:checkIfNeedBlocking
+OutgoingCallReceiver-->DbHelper:getAllData_contacts()
+DbHelper-->DbHelper:getAllData_contacts()
+DbHelper-->OutgoingCallReceiver:Cursor data
+OutgoingCallReceiver-->OutgoingCallReceiver:setResultData(null)
+@enduml

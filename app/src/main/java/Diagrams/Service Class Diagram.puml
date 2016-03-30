@@ -1,0 +1,84 @@
+@startuml
+
+package "Service"{
+    class DbContract{
+
+    }
+
+    class AddressEntry <<Static>>{
+        + {static}  TABLE_NAME: String
+        + {static} COLUMN_NAME: String
+        + {static} COLUMN_NUM: String
+    }
+
+    class ContactsEntry <<Static>>{
+        + {static} TABLE_NAME: String
+        + {static} COLUMN_FACT: String
+    }
+
+    class DbHelper{
+        - {static}  DATABASE_NAME: String
+        - {static}  DATABASE_VERSION: int
+        - DROP_ADDRESS: String
+        - DROP_CONTACTS: String
+        - ContactsTable: String
+        - AddressTable: String
+        - db: SQLiteDatabase
+        + DbHelper (context: Context)
+        + onCreate (db: SQLiteDatabase)
+        + onUpgrade (db: SQLiteDatabase, oldVersion: int, newVersion: int)
+        + insert_address (address: String) : boolean
+        + getAllData_address () : Cursor
+        + getAddress () : Cursor
+        + deleteAll_address ()
+        + insert_contact (name: String, num: String)
+        + getContact (num: int) : Cursor
+        + getAllData_contacts () : Cursor
+        + deleteAllData_contacts () : Cursor
+        + deleteAll_contacts ()
+        + getDBVersion () : int
+    }
+
+    class MyLocListener{
+         - context: Context
+         - GPSEnabled: boolean
+         - NetworkEnabled: boolean
+         - accessLocation: boolean
+         - hasPermission: boolean
+         - location: Location
+         - latitude: double
+         - longitude: double
+         - {static} MIN_DISTANCE: long
+         - {static} MIN_TIME_UPDATE: long
+         - locationManager: LocationManager
+         + MyLocListener (context: Context, gpsPermission : boolean
+         + getLocation () : Location
+         + getLongitude () : double
+         + getLongitude () : double
+         + ableToAccessLocation () : boolean
+         + setPermission (permission: boolean)
+         + showAlert ()
+         + onLocationChanged (location: Location)
+         + onProviderDisabled (provider: String)
+         + onProviderEnabled (provider: String)
+         + onStatusChanged (provider: String, status: int, extras: Bundle)
+         + onBind (arg0: Intent) : IBinder
+    }
+
+    class OutgoingCallReceiver{
+         + onReceive (context: Context, intent: Intent)
+         + checkIfNeedBlocking (outgoingNumber: String, context: Context)
+    }
+}
+
+DbContract o-- AddressEntry
+DbContract o-- ContactsEntry
+DbContract <.. DbHelper
+
+DbHelper <-- MainActivity
+DbHelper <-- SettingsActivity
+
+MainActivity ..>MyLocListener
+OutgoingCallReceiver<--MainActivity
+
+@enduml

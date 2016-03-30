@@ -1,0 +1,95 @@
+@startuml
+
+package "Controller"{
+    class AppCompatPreferenceActivity{
+        - mDelegate: AppCompatDelegate
+        # onCreate (savedInstanceState: Bundle)
+        # onPostCreate (savedInstanceState: Bundle)
+        + getSupportActionBar () : ActionBar
+        + setSupportActionBar (toolbar: Toolbar)
+        + getMenuInflater () : MenuInflater
+        + setContentView (layoutResID: int)
+        + setContentView (view: View)
+        + setContentView (view: View, params: LayoutParams
+        + addContentView (view: View, params: LayoutParams)
+        # onPostResume ()
+        # onTitleChanged (title: CharSequence, color: int)
+        + onConfigurationChanged (newConfig: Configuration)
+        # onStop ()
+        # onDestroy ()
+        + invalidateOptionsMenu ()
+        - getDelegate () : AppCompatDelegate
+    }
+
+    class MainActivity{
+         - DatabaseTest: Button
+         - latutude, longitude: Double
+         - locationManager: LocationManager
+         - {static} MY_PERMISSIONS_REQUEST_CALL_PHONE: int
+         - gpsListener: MyLocListener
+         # onPause ()
+         # onCreate (savedInstanceState: Bundle)
+    }
+
+    class MainActivityFragment{
+        + MainActivityFragment ()
+        + onCreateView (inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) : View
+    }
+
+    class MapsActivity{
+        - mMap: GoogleMap
+        - markerPoints: ArrayList<LatLng>
+        - directionsList: ArrayList<String>
+        # onPause ()
+        # onCreate (savedInstanceState: Bundle)
+        + onMapReady (googleMap: GoogleMap)
+    }
+
+    class SettingsActivity{
+        - {static} sBindPreferenceSummaryToValueListener: OnPreferenceChangeListener
+        - db: DbHelper
+        - {static}isXLargeTablet (context: Context) : boolean
+        - {static}bindPreferenceSummaryToValue (preference: Preference)
+        # onCreate (savedInstanceState: Bundle)
+        - setupActionBar ()
+        + onIsMultiPane () : boolean
+        # isValidFragment (fragmentName: String) boolean
+    }
+
+    class TransitOptionsActivity{
+        # onPause ()
+        # onCreate (savedInstanceState: Bundle)
+    }
+
+    class AddressPreferenceFragment <<static>> {
+        + onCreate(savedInstanceState: Bundle)
+        + onOptionsItemSelected (item: MenuItem) : boolean
+    }
+
+    class BlockedContactsPreferenceFragment<<static>> {
+        + onCreate(savedInstanceState: Bundle)
+        + onOptionsItemSelected (item: MenuItem) : boolean
+    }
+}
+
+SettingsActivity o-- AddressPreferenceFragment
+SettingsActivity o-- BlockedContactsPreferenceFragment
+
+AddressEditTextPreference <..AddressPreferenceFragment
+DeleteAddressConfirmationPreference <..AddressPreferenceFragment
+
+BlockedContactsEditTextPreference <..BlockedContactsPreferenceFragment
+DeleteBlockedContactsConfirmationPreference <..BlockedContactsPreferenceFragment
+
+DbHelper <-- MainActivity
+DbHelper <-- SettingsActivity
+MainActivity -- Direction
+MainActivity ..>UrlString
+MainActivity ..>MyLocListener
+MainActivity -- TransitOptionsActivity
+MainActivity..>JsonParser
+MainActivity--MainActivityFragment
+TransitOptionsActivity -- MapsActivity
+MainActivity -- SettingsActivity
+OutgoingCallReceiver<--MainActivity
+@enduml

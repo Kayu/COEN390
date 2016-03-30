@@ -1,0 +1,89 @@
+@startuml
+
+package "Model"{
+    class AddressEditTextPreference{
+        - db: DbHelper
+        # mContext: Context
+        + AddressEditTextPreference(context: Context) <<contructor>>
+        + AddressEditTextPreference(context: Context,  attrs: AttributeSet) <<contructor>>
+        + AddressEditTextPreference(context: Context,  attrs: AttributeSet, defStyle: int) <<contructor>>
+        + onClick(dialog: DialogInterface, option: int)
+    }
+
+    class BlockedContactsEditTextPreference{
+        - db: DbHelper
+        # mContext: Context
+        + AddressEditTextPreference(context: Context , attrs: AttributeSet)
+        + onClick(dialog: DialogInterface, option: int)
+    }
+
+    class DeleteAddressConfirmationPreference{
+        - db: dbHelper
+        + DeleteAddressConfirmationPreference(context: Context , attrs: AttributeSet)
+        + onClick(dialog: DialogInterface, option: int)
+    }
+
+    class DeleteBlockedContactsConfirmationPreference{
+         - db: dbHelper
+         + DeleteBlockedContactsConfirmation(context: Context , attrs: AttributeSet)
+         + onClick(dialog: DialogInterface, option: int)
+    }
+
+    class Direction{
+         - points: ArrayList<LatLng>
+         - directions: ArrayList<String>
+         - duration: String
+         - distance: String
+         + {static}CREATOR: Creator<Direction>
+         + Direction (parcel:Parcel)<<constructor>>
+         + Direction (points: ArrayList<LatLng>, duration: String, distance: String) <<constructor>>
+         + getPoints () : ArrayList<LatLng>
+         + getDirections () : ArrayList<String>
+         + getDuration () : String
+         + getDistance () : String
+         + describeContents() : int
+         + writeToParcel (dest: Parcel, flags: int)
+    }
+
+    class CREATOR{
+        + createFromParcel (source: Parcel) : Direction <<constructor>>
+        + newArray (size: int) : int [ ]
+    }
+
+    class JsonParser{
+        - dialog: ProgressDialog
+        - current: Context
+        - direction: Direction
+        + JsonParser (context: Context)
+        # onPreExecute ()
+        # onPostExecute ()
+        # doInBackgroud (params: String) : String
+        - decodePolyline (encoded: String) : ArrayList<LatLng>
+        + getPoints () : Direction
+    }
+
+    class UrlString{
+        - from: String
+        - to: String
+        - googleMapKey: String
+        - url: StringBuilder
+        + UrlString (context: Context, from: String, to: String)
+        + makeDirectionsURL (transportType: String) : String
+    }
+}
+
+AddressEditTextPreference <..AddressPreferenceFragment
+DeleteAddressConfirmationPreference <..AddressPreferenceFragment
+
+BlockedContactsEditTextPreference <..BlockedContactsPreferenceFragment
+DeleteBlockedContactsConfirmationPreference <..BlockedContactsPreferenceFragment
+
+
+Direction ..>CREATOR
+
+JsonParser ..>Direction
+MainActivity -- Direction
+MainActivity ..>UrlString
+MainActivity..>JsonParser
+
+@enduml
