@@ -2,11 +2,14 @@ package com.example.kayuho.coen390.Model;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.preference.EditTextPreference;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.kayuho.coen390.Controller.MainActivity;
 import com.example.kayuho.coen390.Service.DbHelper;
 
 /**
@@ -43,20 +46,27 @@ public class AddressEditTextPreference extends EditTextPreference {
         // THis if statement checks the clicked button is OK or cancel
         //In this case it is checking to see if the Ok button was clicked
         if (option == DialogInterface.BUTTON_POSITIVE) {
+
+            Cursor getAddressCursor = db.getAddress();
+
+
             //create an EditTextPreference object
             EditTextPreference pref_address = (EditTextPreference)findPreferenceInHierarchy("set_address");
+            //Used to get text from text field, instead of the one stored in Preferences
+            EditText textField = pref_address.getEditText();
             //Get the text from the edit text
-            String address = pref_address.getText().toString();
+            String address = textField.getText().toString();
             Log.i("address: ",address);
-            //call the insert address method in the DbHelper
-            boolean inserted = db.insert_address(address);
-            //launches a message to the user if data was added or if already exists
-            if(inserted){
-                Toast.makeText(mContext, "Data Inserted", Toast.LENGTH_LONG).show();
-            }else{
-                Toast.makeText(mContext, "You already have an address", Toast.LENGTH_LONG).show();
 
+            if(getAddressCursor.moveToFirst()){
+                db.deleteAll_address();
+                db.insert_address(address);
+                Toast.makeText(mContext, "Data Inserted", Toast.LENGTH_LONG).show();
             }
+            else{
+                db.insert_address(address);
+            }
+
         }
 
         super.onClick(dialog, option);

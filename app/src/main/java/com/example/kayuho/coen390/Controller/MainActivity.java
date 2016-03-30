@@ -129,9 +129,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-    }
 
-/*
+
+
         Button button = (Button) this.findViewById(R.id.TaxiButton);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-*/
+
 
 }
 
