@@ -1,0 +1,32 @@
+@startuml
+MainActivity->myLocListener:create(context, boolean)
+MainActivity->myLocListener:getLatitude
+myLocListener->MainActivity:latitude
+MainActivity->myLocListener:getLongitude
+myLocListener->MainActivity:longitude
+MainActivity->DBHelper:getAddress()
+DBHelper->MainActivity:Address:string
+MainActivity->UrlString:
+UrlString->MainActivity:url:string
+MainActivity->JsonParser:execute
+JsonParser->JsonParser:onPreExecute()
+JsonParser->JsonParser:doInBackground(String)
+JsonParser->Direction:create
+JsonParser->JsonParser:onPostExecute(String)
+JsonParser->MainActivity:
+MainActivity->JsonParsr:getDirection()
+JsonParser->MainActivity:direction
+MainActivity->Bundle:create
+MainActivity->Bundle:putParcelable(String, Direction)
+MainActivity->Intent:create
+MainActivity->Intent:putExtra(String, Bundle)
+MainActivity->TansitOptionsActivity:startActivity(Intent)
+TransitOptionsActivity->TransitOptionsActivity:pressed tansit button
+TransitOptionsActivity->Bundle:create
+TransitOptionsActivity->Bundle:putSerializable(String,ArrayList<LatLon>)
+TransitOptionsActivity->Bundle:putSerializable(String,ArrayList<Direction>)
+TransitOptionsActivity->Intent:create
+TransitOptionsActivity->Intent:putExtra(String, Bundle)
+TransitOptionsActivity->MapsActivity:startActivity(Intent)
+MapsActivity->MapsActivity:onMapReady(GoogleMap)
+@enduml

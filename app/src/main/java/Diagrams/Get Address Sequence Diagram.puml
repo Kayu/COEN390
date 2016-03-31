@@ -1,0 +1,8 @@
+@startuml
+SettingsActivity->SettingsActivity:onClick()
+SettingsActivity->DbHelper:new DbHelper()
+SettingsActivity->DbHelper:getAddress()
+DbHelper->DbContract:AddressEntry
+DbHelper->DbHelper:getReadableDatabse()
+DbHelper->SettingsActivity:return Crusor
+@enduml

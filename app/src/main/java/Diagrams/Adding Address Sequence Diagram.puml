@@ -1,0 +1,8 @@
+@startuml
+SettingsActivity->SettingsActivity:onClick()
+SettingsActivity->DbHelper:new DbHelper()
+SettingsActivity->DbHelper:insert_address(String address)
+DbHelper->DbContract:AddressEntry
+DbHelper->DbHelper:getWritableDatabse()
+DbHelper->SettingsActivity:return true
+@enduml

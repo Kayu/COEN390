@@ -1,0 +1,5 @@
+@startuml
+SettingsActivity->AddressEditTextPreference:onClick()
+AddressEditTextPreference->AddressEditTextPreference:onCreate()
+
+@enduml

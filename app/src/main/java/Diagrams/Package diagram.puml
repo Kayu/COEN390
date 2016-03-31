@@ -1,0 +1,14 @@
+@startuml
+package "Controller"{
+}
+
+package "Model"{
+}
+
+package "Service"{
+}
+
+Controller -->Model:uses
+Controller-->Service:uses
+Model-->Service:uses
+@enduml
