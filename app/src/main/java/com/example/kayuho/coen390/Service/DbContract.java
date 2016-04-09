@@ -7,8 +7,7 @@ import android.provider.BaseColumns;
  */
 public class DbContract {
 
-    //first table declaration
-
+    //first table declaration: Contacts
     public static final class ContactsEntry implements BaseColumns {
         //table name
         public static final String TABLE_NAME = "contacts";
@@ -18,7 +17,7 @@ public class DbContract {
         public static final String COLUMN_NUM = "phone_num";
     }
 
-    //second table declaration
+    //second table declaration: Address
     public static final class AddressEntry implements BaseColumns {
         //table name
         public static final String TABLE_NAME = "address";
@@ -27,5 +26,12 @@ public class DbContract {
 
 
     }
+    //Third table declaration: Taxi
+    public static final class TaxiEntry implements BaseColumns {
+        //table name
+        public static final String TABLE_NAME = "taxi";
+        //first column name
+        public static final String COLUMN_NUM = "taxi_num";
 
+    }
     }

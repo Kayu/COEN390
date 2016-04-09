@@ -11,7 +11,7 @@
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="Add Number of Contact to Block"/>
+        android:title="Add Phone # of Contact to Block"/>
 
     <com.example.kayuho.coen390.Model.DeleteBlockedContactConfirmationPreference
         android:dialogMessage="Are you sure you want to remove the following number from the blocked list?"

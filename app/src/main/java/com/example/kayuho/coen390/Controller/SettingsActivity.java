@@ -171,7 +171,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 //|| DataSyncPreferenceFragment.class.getName().equals(fragmentName)
                 //|| NotificationPreferenceFragment.class.getName().equals(fragmentName)
                 || AddressPreferenceFragment.class.getName().equals(fragmentName)
-                || BlockedContactsPreferenceFragment.class.getName().equals(fragmentName);
+                || BlockedContactsPreferenceFragment.class.getName().equals(fragmentName)
+                || TaxiPreferenceFragment.class.getName().equals(fragmentName);
+
     }
 
     /**
@@ -309,6 +311,35 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("blocked_contacts"));
             bindPreferenceSummaryToValue(findPreference("delete_blocked_contact"));
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class TaxiPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref_taxi);
+            PreferenceManager.setDefaultValues(getActivity(), R.xml.pref_taxi, false);
+            setHasOptionsMenu(true);
+
+            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+            // to their values. When their values change, their summaries are
+            // updated to reflect the new value, per the Android Design
+            // guidelines.
+            bindPreferenceSummaryToValue(findPreference("set_taxi"));
+            bindPreferenceSummaryToValue(findPreference("delete_taxi"));
         }
 
         @Override

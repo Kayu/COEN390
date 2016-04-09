@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.example.kayuho.coen390.Model.TaxiTextPreference
+        android:capitalize="words"
+        android:defaultValue="Please Enter a Valid Taxi #"
+        android:inputType="textCapWords"
+        android:key="set_taxi"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Your Taxi #" />
+
+    <com.example.kayuho.coen390.Model.DeleteTaxiConfirmation
+        android:dialogMessage="You are about to delete the taxi number stored on this device. Do you wish to proceed?"
+        android:key="delete_taxi"
+        android:defaultValue="Delete Stored Taxi #"
+        android:summary="Delete Current Taxi #"
+        android:title="Delete Taxi #" />
+
+</PreferenceScreen>

@@ -1,5 +1,8 @@
 package com.example.kayuho.coen390.Model;
 
+/**
+ * Created by Alexei on 2016-04-09.
+ */
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -12,29 +15,26 @@ import android.widget.Toast;
 import com.example.kayuho.coen390.Controller.MainActivity;
 import com.example.kayuho.coen390.Service.DbHelper;
 
-/**
- * Created by Kai on 3/27/2016.
- * This class extends from the basic EditTextPreference to access the Ok and Cancel button functionality
- *
- */
-public class AddressEditTextPreference extends EditTextPreference {
+//This class will be constite the layout for entering a taxi number in the settings
+
+public class TaxiTextPreference extends EditTextPreference {
     private DbHelper db;
     protected Context mContext;
     //This constructor instanciated the Dbhelper obejct and store the context
-    public AddressEditTextPreference(Context context) {
+    public TaxiTextPreference(Context context) {
         super(context);
         mContext = context;
         db = new DbHelper(context);
     }
 
 
-    public AddressEditTextPreference(Context context, AttributeSet attrs) {
+    public TaxiTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         db = new DbHelper(context);
     }
 
-    public AddressEditTextPreference(Context context, AttributeSet attrs, int defStyle) {
+    public TaxiTextPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
         db = new DbHelper(context);
@@ -47,25 +47,22 @@ public class AddressEditTextPreference extends EditTextPreference {
         //In this case it is checking to see if the Ok button was clicked
         if (option == DialogInterface.BUTTON_POSITIVE) {
 
-            Cursor getAddressCursor = db.getAddress();
+            Cursor getTaxiCursor = db.getTaxiNum();
 
 
             //create an EditTextPreference object
-            EditTextPreference pref_address = (EditTextPreference)findPreferenceInHierarchy("set_address");
+            EditTextPreference pref_Taxi = (EditTextPreference)findPreferenceInHierarchy("set_taxi");
             //Used to get text from text field, instead of the one stored in Preferences
-            EditText textField = pref_address.getEditText();
+            EditText textField = pref_Taxi.getEditText();
             //Get the text from the edit text
-            String address = textField.getText().toString();
-            Log.i("address: ",address);
+            String taxi_num = textField.getText().toString();
+            Log.i("TaxiNum: ",taxi_num);
 
-            if(getAddressCursor.moveToFirst()){
-                db.deleteAll_address();
-                db.insert_address(address);
+
+                db.deleteAll_taxi();
+                db.insert_taxi(taxi_num);
                 Toast.makeText(mContext, "Data Inserted", Toast.LENGTH_LONG).show();
-            }
-            else{
-                db.insert_address(address);
-            }
+
 
         }
 
