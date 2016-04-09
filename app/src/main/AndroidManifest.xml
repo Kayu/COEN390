@@ -50,7 +50,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Controller.SettingsActivity"
-            android:label="@string/title_activity_settings" />
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".Controller.MainActivity"/>
 
         <receiver android:name=".Service.OutgoingCallReceiver">
             <intent-filter>

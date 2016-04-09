@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,7 +15,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kayuho.coen390.Model.Direction;
@@ -51,6 +54,17 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         //openGPSSettings();
         //GPSServicelistner();
+
+
+
+
+        String fontPath = "fonts/Capture_it.ttf";
+
+        TextView getHomeTV = (TextView) findViewById(R.id.GetHomeButton);
+        TextView callTaxiTV = (TextView) findViewById(R.id.TaxiButton);
+        Typeface tf = Typeface.createFromAsset(getAssets(),fontPath);
+        getHomeTV.setTypeface(tf);
+        callTaxiTV.setTypeface(tf);
         final boolean gpsPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
         Button btn_getHome = (Button) findViewById(R.id.GetHomeButton);
         btn_getHome.setOnClickListener(new View.OnClickListener() {

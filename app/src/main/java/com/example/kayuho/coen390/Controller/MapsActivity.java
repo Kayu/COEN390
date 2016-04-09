@@ -1,12 +1,23 @@
 package com.example.kayuho.coen390.Controller;
 
+import com.google.android.gms.maps.OnMapReadyCallback;
+
+import android.graphics.Typeface;
+import android.support.v4.app.FragmentActivity;
+
+
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.example.kayuho.coen390.R;
 import com.example.kayuho.coen390.Service.OutgoingCallReceiver;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -60,9 +71,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        ListView directions = (ListView)findViewById(R.id.DirectionListView);
+        final ListView directions = (ListView)findViewById(R.id.DirectionListView);
+        String fontPathButton = "fonts/ostrich-regular.ttf";
+       final Typeface tf_Button = Typeface.createFromAsset(getAssets(),fontPathButton);
+
+        //directionsTextView.setTypeface(tf_Button);
         //Replace this with directions to display in list view
-        ArrayAdapter<String> directionsAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,directionsList);
+        ArrayAdapter<String> directionsAdapter = new ArrayAdapter<String>(this,R.layout.directions_list_text_view,directionsList){
+            @Override
+
+            public View getView(int position, View convertView, ViewGroup parent) {
+            View view = super.getView(position, convertView, parent);
+            TextView directionsTextView = (TextView) view;
+            directionsTextView.setTypeface(tf_Button);
+
+
+            return view;
+        }
+        };
+        //CustomListAdapter directionsAdapter = new CustomListAdapter(MapsActivity.this, R.id.DirectionListView,directionsList);
         directions.setAdapter(directionsAdapter);
     }
 

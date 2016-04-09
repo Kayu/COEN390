@@ -1,6 +1,7 @@
 package com.example.kayuho.coen390.Controller;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -39,17 +40,38 @@ public class TransitOptionsActivity extends AppCompatActivity {
         StringBuilder str_publictransit =  new StringBuilder();;
         str_publictransit.append("DURATION: ");
         str_publictransit.append(transitDirection.getDuration());
+        str_publictransit.append("\n");
         str_publictransit.append(" DISTANCE: ");
         str_publictransit.append(transitDirection.getDistance());
 
         StringBuilder str_walking = new StringBuilder();
         str_walking.append("DURATION: ");
         str_walking.append(walkingDirection.getDuration());
+        str_walking.append("\n");
         str_walking.append(" DISTANCE: ");
         str_walking.append(walkingDirection.getDistance());
 
+        String fontPathButton = "fonts/ostrich-regular.ttf";
+        Typeface tf_Button = Typeface.createFromAsset(getAssets(),fontPathButton);
+
+        String fontPathTitles = "fonts/Capture_it.ttf";
+        Typeface tf_Titles = Typeface.createFromAsset(getAssets(),fontPathTitles);
+
+        TextView transit_Title = (TextView) findViewById(R.id.PublicTransitText);
+        TextView walking_Title = (TextView) findViewById(R.id.WalkingText);
+
+        transit_Title.setTypeface(tf_Titles);
+        walking_Title.setTypeface(tf_Titles);
+
         TextView pt_textView = (TextView)findViewById(R.id.TransitButton);
         pt_textView.setText(str_publictransit.toString());
+        pt_textView.setTypeface(tf_Button);
+        pt_textView.setTextSize(25);
+
+        TextView walkingTextView = (TextView)findViewById(R.id.WalkingButton);
+        walkingTextView.setText(str_walking.toString());
+        walkingTextView.setTypeface(tf_Button);
+        walkingTextView.setTextSize(25);
 
         Button transitMapsButton = (Button) findViewById(R.id.TransitButton);
         transitMapsButton.setOnClickListener(new View.OnClickListener() {
@@ -64,8 +86,7 @@ public class TransitOptionsActivity extends AppCompatActivity {
             }
         });
 
-        TextView walkingTextView = (TextView)findViewById(R.id.WalkingButton);
-        walkingTextView.setText(str_walking.toString());
+
 
         Button walkMapsButton = (Button) findViewById(R.id.WalkingButton);
         walkMapsButton.setOnClickListener(new View.OnClickListener() {

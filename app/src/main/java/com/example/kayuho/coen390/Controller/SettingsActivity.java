@@ -129,6 +129,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         setupActionBar();
         db = new DbHelper(this);
 
+
+
     }
 
     /**
