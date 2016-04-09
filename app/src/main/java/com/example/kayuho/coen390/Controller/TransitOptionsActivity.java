@@ -32,10 +32,10 @@ public class TransitOptionsActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         Bundle mBundle = intent.getBundleExtra("bundle");
-        Bundle wBundle = intent.getBundleExtra("walkBundle");
+        //Bundle wBundle = intent.getBundleExtra("walkBundle");
 
         final Direction transitDirection = (Direction) mBundle.getParcelable("transit");
-        final Direction walkingDirection = (Direction) wBundle.getParcelable("walking");
+        final Direction walkingDirection = (Direction) mBundle.getParcelable("walking");
 
         StringBuilder str_publictransit =  new StringBuilder();;
         str_publictransit.append("DURATION: ");

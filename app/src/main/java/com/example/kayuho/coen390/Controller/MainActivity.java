@@ -15,13 +15,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kayuho.coen390.Model.Direction;
-import com.example.kayuho.coen390.Model.JsonParser;
+import com.example.kayuho.coen390.Model.ApiRequest;
 
 import com.example.kayuho.coen390.Service.MyLocListener;
 import com.example.kayuho.coen390.Service.DbHelper;
@@ -39,11 +38,13 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1234;
     private MyLocListener gpsListener;
+    Button btn_getHome;
+
+
+
     @Override
     protected void onPause() {
         super.onPause();
-
-
     }
 
     @Override
@@ -52,12 +53,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //openGPSSettings();
-        //GPSServicelistner();
-
-
-
-
         String fontPath = "fonts/Capture_it.ttf";
 
         TextView getHomeTV = (TextView) findViewById(R.id.GetHomeButton);
@@ -65,73 +60,8 @@ public class MainActivity extends AppCompatActivity {
         Typeface tf = Typeface.createFromAsset(getAssets(),fontPath);
         getHomeTV.setTypeface(tf);
         callTaxiTV.setTypeface(tf);
-        final boolean gpsPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-        Button btn_getHome = (Button) findViewById(R.id.GetHomeButton);
-        btn_getHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                gpsListener = new MyLocListener(MainActivity.this, gpsPermission);
-                if (gpsListener.ableToAccessLocation()) {
-                    latitude = gpsListener.getLatitude();
-                    longitude = gpsListener.getLongitude();
-                } else {
-                    gpsListener.showAlert();
-                }
-
-                //Get Home Address From DB
-                DbHelper getAddressDB = new DbHelper(MainActivity.this);
-                Cursor getAddressCursor = getAddressDB.getAddress();
-
-                //If an Address is in the DB
-                if (getAddressCursor.moveToFirst()) {
-                    //Create Arrival String
-                    String arrival = getAddressCursor.getString(0);
-                    arrival = arrival.replace(" ", "");
-                    //arrival = "1087Duguay";
-                    String depart = latitude.toString() + "," + longitude.toString();
-
-                    UrlString url = new UrlString(MainActivity.this, depart, arrival);
-                    JsonParser getTransitDirection = new JsonParser(MainActivity.this);
-                    Direction transitDirection;
-                    try {
-                        getTransitDirection.execute(url.makeDirectionsURL("transit")).get();
-
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    transitDirection = getTransitDirection.getPoints();
-                    Intent intent = new Intent(MainActivity.this, TransitOptionsActivity.class);
-
-                    Bundle mBundle = new Bundle();
-                    mBundle.putParcelable("transit", transitDirection);
-                    intent.putExtra("bundle", mBundle);
-
-                    JsonParser getWalkingDirection = new JsonParser((MainActivity.this));
-
-                    Direction walkingDirection;
-                    try {
-                        getWalkingDirection.execute(url.makeDirectionsURL("walking")).get();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                        ;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    walkingDirection = getWalkingDirection.getPoints();
-
-                    Bundle wBundle = new Bundle();
-                    wBundle.putParcelable("walking", walkingDirection);
-                    intent.putExtra("walkBundle", wBundle);
-                    startActivity(intent);
-                }
-                //If no Address is in DB
-                else
-                    Toast.makeText(MainActivity.this, "PLEASE ADD ADDRESS IN SETTINGS", Toast.LENGTH_LONG).show();
-            }
-        });
+        btn_getHome = (Button) findViewById(R.id.GetHomeButton);
+        getHome();
 
 
 
@@ -148,6 +78,74 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
+        });
+    }
+
+    private void getHome(){
+        final boolean gpsPermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        btn_getHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                gpsListener = new MyLocListener(MainActivity.this, gpsPermission);
+                if (gpsListener.ableToAccessLocation()) {
+                    latitude = gpsListener.getLatitude();
+                    longitude = gpsListener.getLongitude();
+                } else {
+                    gpsListener.showAlert();
+                }
+
+                //Get Home Address From DB
+                DbHelper getAddressDB = new DbHelper(MainActivity.this);
+                Cursor getAddressCursor = getAddressDB.getAddress();
+                Direction direction;
+
+                //If an Address is in the DB
+                if (getAddressCursor.moveToFirst()) {
+                    //Create Arrival String
+                    String arrival = getAddressCursor.getString(0);
+                    arrival = arrival.replace(" ", "");
+                    //arrival = "1087Duguay";
+                    String depart = latitude.toString() + "," + longitude.toString();
+
+                    UrlString url = new UrlString(MainActivity.this, depart, arrival);
+                    ApiRequest directionResult = new ApiRequest(MainActivity.this);
+
+                    try {
+                        directionResult.execute(url.makeDirectionsURL("transit")).get();
+
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    direction = directionResult.getDirection();
+
+                    Bundle mBundle = new Bundle();
+                    mBundle.putParcelable("transit", direction);
+                    //intent.putExtra("bundle", mBundle);
+
+                    //ApiRequest getWalkingDirection = new ApiRequest((MainActivity.this));
+                    directionResult = new ApiRequest(MainActivity.this);
+                    try {
+                        directionResult.execute(url.makeDirectionsURL("walking")).get();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    direction = directionResult.getDirection();
+
+                    //Bundle wBundle = new Bundle();
+                    mBundle.putParcelable("walking", direction);
+                    Intent intent = new Intent(MainActivity.this, TransitOptionsActivity.class);
+                    intent.putExtra("bundle", mBundle);
+                    startActivity(intent);
+                }
+                //If no Address is in DB
+                else
+                    Toast.makeText(MainActivity.this, "PLEASE ADD ADDRESS IN SETTINGS", Toast.LENGTH_LONG).show();
+            }
         });
     }
 
