@@ -9,11 +9,11 @@ import java.util.Date;
 /**
  * Created by Kayu on 2016-03-07.
  */
-public class UrlString {
+public class UrlStringBuilder {
     private String from , to;
     private String googleMapKey;
     private StringBuilder url;
-    public UrlString(Context context, String from, String to){
+    public UrlStringBuilder(Context context, String from, String to){
         this.from = from;
         this.to = to;
         this.googleMapKey = context.getResources().getString(R.string.google_maps_key);

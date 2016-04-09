@@ -79,7 +79,6 @@ public class DbHelper extends SQLiteOpenHelper {
             return (successful > 0);
     }
 
-
     // may be useful -- possibly wipe later on
     public Cursor getAllData_address(){
         db = this.getReadableDatabase();  //open connection to DB

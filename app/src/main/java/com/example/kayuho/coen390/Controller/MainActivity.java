@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -22,11 +21,12 @@ import android.widget.Toast;
 import com.example.kayuho.coen390.Model.Direction;
 import com.example.kayuho.coen390.Model.ApiRequest;
 
-import com.example.kayuho.coen390.Service.MyLocListener;
+import com.example.kayuho.coen390.Service.GPSListener;
 import com.example.kayuho.coen390.Service.DbHelper;
 
-import com.example.kayuho.coen390.Model.UrlString;
+import com.example.kayuho.coen390.Model.UrlStringBuilder;
 import com.example.kayuho.coen390.R;
+import com.example.kayuho.coen390.Service.TaxiCaller;
 
 import java.util.concurrent.ExecutionException;
 
@@ -37,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
     Double latitude,longitude;
     private LocationManager locationManager;
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1234;
-    private MyLocListener gpsListener;
+    private GPSListener gpsListener;
     Button btn_getHome;
-
+    Button btn_callTaxi;
 
 
     @Override
@@ -65,20 +65,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        Button button = (Button) this.findViewById(R.id.TaxiButton);
+        btn_callTaxi = (Button) this.findViewById(R.id.TaxiButton);
+        callTaxi();
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
-                    return;
-                } else {
-                    callPhone();
-                }
-            }
-
-        });
     }
 
     private void getHome(){
@@ -87,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                gpsListener = new MyLocListener(MainActivity.this, gpsPermission);
+                gpsListener = new GPSListener(MainActivity.this, gpsPermission);
                 if (gpsListener.ableToAccessLocation()) {
                     latitude = gpsListener.getLatitude();
                     longitude = gpsListener.getLongitude();
@@ -108,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                     //arrival = "1087Duguay";
                     String depart = latitude.toString() + "," + longitude.toString();
 
-                    UrlString url = new UrlString(MainActivity.this, depart, arrival);
+                    UrlStringBuilder url = new UrlStringBuilder(MainActivity.this, depart, arrival);
                     ApiRequest directionResult = new ApiRequest(MainActivity.this);
 
                     try {
@@ -149,12 +138,28 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void callTaxi(){
+        btn_callTaxi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+                    return;
+                } else {
+                    new TaxiCaller().makeCall(MainActivity.this);
+                }
+            }
+
+        });
+    }
+
+    /*
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_CALL_PHONE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    callPhone();
+                    new TaxiCaller().makeCall(MainActivity.this);
                 }
                 else{
                     Toast.makeText(MainActivity.this, "PHONE_CALL Denied", Toast.LENGTH_LONG).show();
@@ -177,9 +182,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-
-
+*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -203,7 +206,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
 }
 

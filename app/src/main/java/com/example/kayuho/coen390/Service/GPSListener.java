@@ -24,7 +24,7 @@ import android.widget.Toast;
  * Created by zhou on 2016/3/9.
  * fixed and modified to work by Ka Yu
  */
-public class MyLocListener extends Service implements LocationListener {
+public class GPSListener extends Service implements LocationListener {
 
     private Context context;
     private boolean GPSEnabled = false;
@@ -41,7 +41,7 @@ public class MyLocListener extends Service implements LocationListener {
     private static final long MIN_TIME_UPDATE = 1000 * 60 * 1;
     private LocationManager locationManager;
 
-    public MyLocListener(Context context, boolean gpsPermission){
+    public GPSListener(Context context, boolean gpsPermission){
         this.context = context;
         hasPermission = gpsPermission;
         getLocation();
