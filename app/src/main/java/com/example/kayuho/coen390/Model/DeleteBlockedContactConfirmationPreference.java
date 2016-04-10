@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.kayuho.coen390.Service.DbHelper;
+import com.example.kayuho.coen390.Service.ContactsDBHelper;
 
 /**
  * Created by Mathew on 28/03/2016.
@@ -17,26 +17,26 @@ import com.example.kayuho.coen390.Service.DbHelper;
 public class DeleteBlockedContactConfirmationPreference extends EditTextPreference {
 
 
-    private DbHelper db;
+    private ContactsDBHelper db;
     protected Context mContext;
     //This constructor instanciated the Dbhelper obejct and store the context
 
     public DeleteBlockedContactConfirmationPreference(Context context) {
         super(context);
         mContext = context;
-        db = new DbHelper(context);
+        db = new ContactsDBHelper(context);
     }
 
     public DeleteBlockedContactConfirmationPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
-        db = new DbHelper(context);
+        db = new ContactsDBHelper(context);
     }
 
     public DeleteBlockedContactConfirmationPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
-        db = new DbHelper(context);
+        db = new ContactsDBHelper(context);
     }
 
     //This function is use when user clicks either the cancel button or the ok button for the edit text preference

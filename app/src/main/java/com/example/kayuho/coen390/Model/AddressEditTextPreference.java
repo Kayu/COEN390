@@ -9,8 +9,7 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.kayuho.coen390.Controller.MainActivity;
-import com.example.kayuho.coen390.Service.DbHelper;
+import com.example.kayuho.coen390.Service.AddressDBHelper;
 
 /**
  * Created by Kai on 3/27/2016.
@@ -18,26 +17,26 @@ import com.example.kayuho.coen390.Service.DbHelper;
  *
  */
 public class AddressEditTextPreference extends EditTextPreference {
-    private DbHelper db;
+    private AddressDBHelper db;
     protected Context mContext;
     //This constructor instanciated the Dbhelper obejct and store the context
     public AddressEditTextPreference(Context context) {
         super(context);
         mContext = context;
-        db = new DbHelper(context);
+        db = new AddressDBHelper(context);
     }
 
 
     public AddressEditTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
-        db = new DbHelper(context);
+        db = new AddressDBHelper(context);
     }
 
     public AddressEditTextPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
-        db = new DbHelper(context);
+        db = new AddressDBHelper(context);
     }
     //test
     //This function is use when user clicks either the cancel button or the ok button for the edit text preference

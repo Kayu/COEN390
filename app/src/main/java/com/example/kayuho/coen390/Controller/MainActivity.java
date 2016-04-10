@@ -21,8 +21,8 @@ import android.widget.Toast;
 import com.example.kayuho.coen390.Model.Direction;
 import com.example.kayuho.coen390.Model.ApiRequest;
 
+import com.example.kayuho.coen390.Service.AddressDBHelper;
 import com.example.kayuho.coen390.Service.GPSListener;
-import com.example.kayuho.coen390.Service.DbHelper;
 
 import com.example.kayuho.coen390.Model.UrlStringBuilder;
 import com.example.kayuho.coen390.R;
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 //Get Home Address From DB
-                DbHelper getAddressDB = new DbHelper(MainActivity.this);
+                AddressDBHelper getAddressDB = new AddressDBHelper(MainActivity.this);
                 Cursor getAddressCursor = getAddressDB.getAddress();
                 Direction direction;
 

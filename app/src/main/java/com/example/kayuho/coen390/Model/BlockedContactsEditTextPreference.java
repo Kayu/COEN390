@@ -9,7 +9,7 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.kayuho.coen390.Service.DbHelper;
+import com.example.kayuho.coen390.Service.ContactsDBHelper;
 
 /**
  * Created by Mathew on 28/03/2016.
@@ -18,26 +18,26 @@ import com.example.kayuho.coen390.Service.DbHelper;
 public class BlockedContactsEditTextPreference extends EditTextPreference {
 
 
-        private DbHelper db;
-        protected Context mContext;
-        //This constructor instanciated the Dbhelper obejct and store the context
+    private ContactsDBHelper db;
+    protected Context mContext;
+    //This constructor instanciated the Dbhelper obejct and store the context
 
     public BlockedContactsEditTextPreference(Context context) {
         super(context);
         mContext = context;
-        db = new DbHelper(context);
+        db = new ContactsDBHelper(context);
     }
        
     public BlockedContactsEditTextPreference(Context context, AttributeSet attrs) {
                 super(context, attrs);
                 mContext = context;
-                db = new DbHelper(context);
+                db = new ContactsDBHelper(context);
     }
 
         public BlockedContactsEditTextPreference(Context context, AttributeSet attrs, int defStyle) {
             super(context, attrs, defStyle);
             mContext = context;
-            db = new DbHelper(context);
+            db = new ContactsDBHelper(context);
     }
 
     //This function is use when user clicks either the cancel button or the ok button for the edit text preference
@@ -80,7 +80,7 @@ public class BlockedContactsEditTextPreference extends EditTextPreference {
                 }
                 //If there is space and no reccurance, add contact to dB
                 else {Log.i("Blocked Number: ", BlockedContactNum);
-                //call the insert address method in the DbHelper
+                //call the insert address method in the ContactDbHelper
                 db.insert_contact(BlockedContactNum);}
             }
         super.onClick(dialog, option);

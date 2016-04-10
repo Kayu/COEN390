@@ -12,32 +12,31 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.kayuho.coen390.Controller.MainActivity;
-import com.example.kayuho.coen390.Service.DbHelper;
+import com.example.kayuho.coen390.Service.TaxiDBHelper;
 
 //This class will be constite the layout for entering a taxi number in the settings
 
 public class TaxiTextPreference extends EditTextPreference {
-    private DbHelper db;
+    private TaxiDBHelper db;
     protected Context mContext;
     //This constructor instanciated the Dbhelper obejct and store the context
     public TaxiTextPreference(Context context) {
         super(context);
         mContext = context;
-        db = new DbHelper(context);
+        db = new TaxiDBHelper(context);
     }
 
 
     public TaxiTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
-        db = new DbHelper(context);
+        db = new TaxiDBHelper(context);
     }
 
     public TaxiTextPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
-        db = new DbHelper(context);
+        db = new TaxiDBHelper(context);
     }
     //test
     //This function is use when user clicks either the cancel button or the ok button for the edit text preference

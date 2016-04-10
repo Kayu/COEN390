@@ -41,7 +41,7 @@ public class OutgoingCallReceiver extends BroadcastReceiver {
 
         //Create DB Helper
         //Get all contact data from DB
-        DbHelper getContacts = new DbHelper(context);
+        ContactsDBHelper getContacts = new ContactsDBHelper(context);
         Cursor dbEntries = getContacts.getAllData_contacts();
 
         //If move is successful

@@ -9,23 +9,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.preference.DialogPreference;
 
-import android.preference.EditTextPreference;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.example.kayuho.coen390.Service.DbHelper;
+import com.example.kayuho.coen390.Service.TaxiDBHelper;
 
 
 public class DeleteTaxiConfirmation extends DialogPreference {
-    private DbHelper db;
+    private TaxiDBHelper db;
     private Context mContext;
 
 
     public DeleteTaxiConfirmation(Context context, AttributeSet attrs) {
 
         super(context, attrs);
-        db = new DbHelper(context);
+        db = new TaxiDBHelper(context);
         this.setDefaultValue("Delete stored Taxi #");
         mContext = context;
     }

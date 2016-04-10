@@ -21,7 +21,6 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 
 import com.example.kayuho.coen390.R;
-import com.example.kayuho.coen390.Service.DbHelper;
 
 import java.util.List;
 
@@ -122,14 +121,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     }
 
 
-    private DbHelper db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
-        db = new DbHelper(this);
-
-
 
     }
 

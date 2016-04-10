@@ -4,25 +4,23 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.preference.DialogPreference;
 
-import android.preference.EditTextPreference;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.example.kayuho.coen390.Service.DbHelper;
+import com.example.kayuho.coen390.Service.AddressDBHelper;
 
 /**
  * Created by kayuho on 2016-03-27.
  */
 public class DeleteAddressConfirmationPreference extends DialogPreference {
-    private DbHelper db;
+    private AddressDBHelper db;
     private Context mContext;
 
 
     public DeleteAddressConfirmationPreference(Context context, AttributeSet attrs) {
 
         super(context, attrs);
-        db = new DbHelper(context);
+        db = new AddressDBHelper(context);
         this.setDefaultValue("Delete stored address");
         mContext = context;
     }

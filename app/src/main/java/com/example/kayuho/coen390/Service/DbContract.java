@@ -34,4 +34,6 @@ public class DbContract {
         public static final String COLUMN_NUM = "taxi_num";
 
     }
-    }
+
+    public final static String DATABASE_NAME = "facts.db";
+}

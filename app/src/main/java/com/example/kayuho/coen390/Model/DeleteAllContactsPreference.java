@@ -5,7 +5,7 @@ import android.content.DialogInterface;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 
-import com.example.kayuho.coen390.Service.DbHelper;
+import com.example.kayuho.coen390.Service.ContactsDBHelper;
 
 
 /**
@@ -13,12 +13,12 @@ import com.example.kayuho.coen390.Service.DbHelper;
  */
 public class DeleteAllContactsPreference extends DialogPreference{
 
-    private DbHelper db;
+    private ContactsDBHelper db;
 
     public DeleteAllContactsPreference(Context context,AttributeSet attrs){
 
         super(context, attrs);
-        db = new DbHelper(context);
+        db = new ContactsDBHelper(context);
         this.setDefaultValue("Delete All Contacts Currently Blocked");
 
     }
