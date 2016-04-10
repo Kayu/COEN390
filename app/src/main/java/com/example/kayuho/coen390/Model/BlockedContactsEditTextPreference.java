@@ -21,7 +21,8 @@ public class BlockedContactsEditTextPreference extends EditTextPreference {
         private DbHelper db;
         protected Context mContext;
         //This constructor instanciated the Dbhelper obejct and store the context
-        public BlockedContactsEditTextPreference(Context context) {
+
+    public BlockedContactsEditTextPreference(Context context) {
         super(context);
         mContext = context;
         db = new DbHelper(context);

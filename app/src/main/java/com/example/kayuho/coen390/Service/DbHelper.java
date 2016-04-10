@@ -108,7 +108,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public boolean insert_contact(String num){
         db = this.getWritableDatabase();
                 ContentValues values = new ContentValues(2);
-                values.put(DbContract.ContactsEntry.COLUMN_NUM,num);
+                values.put(DbContract.ContactsEntry.COLUMN_NUM, num);
                 long successful = db.insert(DbContract.ContactsEntry.TABLE_NAME, null, values);
                 db.close();
                 return (successful > 0);
@@ -124,8 +124,6 @@ public class DbHelper extends SQLiteOpenHelper {
         return data;
     }
 
-
-
     //retrieve specific contact
     public Cursor getContact(int num){
         db = this.getReadableDatabase();
@@ -134,6 +132,7 @@ public class DbHelper extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(retrieveQuery,null);
         return data;
     }
+
     // get all data CONTACTS
     public Cursor getAllData_contacts(){
         db = this.getReadableDatabase();  //open connection to DB
@@ -158,7 +157,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.delete(DbContract.ContactsEntry.TABLE_NAME, (query + id_num), null);
         db.close();
 
-    }
+        }
 
     //------------------- Taxi -----------------------------
 

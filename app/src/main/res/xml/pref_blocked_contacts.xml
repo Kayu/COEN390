@@ -2,7 +2,7 @@
 
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--CHECK THIS PART OVER!!! WHAT IS THE ACTUAL KEY FOR THE NUMBER!!!!-->
+
     <com.example.kayuho.coen390.Model.BlockedContactsEditTextPreference
         android:capitalize="words"
         android:defaultValue="Please Enter the Phone Number of the Contact you wish to Block"
@@ -14,10 +14,20 @@
         android:title="Add Phone # of Contact to Block"/>
 
     <com.example.kayuho.coen390.Model.DeleteBlockedContactConfirmationPreference
-        android:dialogMessage="Are you sure you want to remove the following number from the blocked list?"
-        android:key="delete_blocked_contact"
+        android:capitalize="words"
         android:defaultValue="Delete blocked contact"
-        android:summary="Delete a blocked contact"
+        android:inputType="textCapWords"
+        android:key="delete_blocked_contact"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
         android:title="Delete Blocked Contact" />
+
+    <com.example.kayuho.coen390.Model.DeleteAllContactsPreference
+        android:dialogMessage="Are you sure you wish to remove all numbers from the blocked list?"
+        android:key="delete_all_contacts"
+        android:title="Delete All Currently Blocked Contact" />
+
+
 
 </PreferenceScreen>
