@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void callTaxi(){
+    private void callTaxi( ){
         btn_callTaxi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
