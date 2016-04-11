@@ -86,11 +86,11 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
     }
 
     //deletes a specific contact from the table based on the ID
-    public void delete_contact(String id_num){
+    public void delete_contact(String num){
         db = this.getWritableDatabase();
-        String query = "id =";
-
-        db.delete(DbContract.ContactsEntry.TABLE_NAME, (query + id_num), null);
+        String query = DbContract.ContactsEntry.COLUMN_NUM + " = ?";
+        String[] numbers = new String[] { String.valueOf(num) };
+        db.delete(DbContract.ContactsEntry.TABLE_NAME, query, numbers);
         db.close();
 
     }

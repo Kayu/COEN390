@@ -52,9 +52,9 @@ public class DeleteBlockedContactConfirmationPreference extends EditTextPreferen
             //create an EditTextPreference object
             EditTextPreference pref_blocked_number = (EditTextPreference) findPreferenceInHierarchy("blocked_contacts");
 
-            EditText blockEditText = pref_blocked_number.getEditText();
+            //EditText blockEditText = pref_blocked_number.getEditText();
             //Get the text from the edit text
-            String BlockedContactNum = blockEditText.getText().toString();
+            String BlockedContactNum = pref_blocked_number.getText().toString();
             //First check to see if there are any contacts in the DB
             if (getContactCursor.getCount() == 0) {
                 Toast.makeText(mContext, "There are no contacts Currently Blocked", Toast.LENGTH_LONG).show();
