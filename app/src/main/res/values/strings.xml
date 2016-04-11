@@ -67,4 +67,23 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+
+
+    <!--Display list for blocked Contacts-->
+    <string name="list_blocked_contacts">List of Blocked Contacts</string>
+    <string-array name="list_blocked_contacts_entries">
+        <item>Contact1</item>
+        <item>Contact2</item>
+        <item>Contact3</item>
+        <item>Contact4</item>
+        <item>Contact5</item>
+    </string-array>
+    <string-array name="list_blocked_contacts_values">
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+        <item>-2</item>
+    </string-array>
+
 </resources>
