@@ -80,7 +80,7 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
     //drop the contacts table
     public void deleteAll_contacts(){
         db = this.getWritableDatabase();
-        db.delete(DbContract.ContactsEntry.TABLE_NAME, null, null);
+        int sucess = db.delete(DbContract.ContactsEntry.TABLE_NAME, null, null);
         db.close();
 
     }
@@ -88,11 +88,10 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
     //deletes a specific contact from the table based on the ID
     public void delete_contact(String num){
         db = this.getWritableDatabase();
-        String query = DbContract.ContactsEntry.COLUMN_NUM + " = ?";
+        String query = BaseColumns._ID  + " = ?";
         String[] numbers = new String[] { String.valueOf(num) };
-        db.delete(DbContract.ContactsEntry.TABLE_NAME, query, numbers);
+        int sucess = db.delete(DbContract.ContactsEntry.TABLE_NAME, query, numbers);
         db.close();
-
     }
 
 }

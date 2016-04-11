@@ -68,7 +68,7 @@ public class DeleteBlockedContactConfirmationPreference extends EditTextPreferen
                         String ContactID = getContactCursor.getString(0);
                         db.delete_contact(ContactID);
                         Toast.makeText(mContext, "Contact Deleted from Blocked List", Toast.LENGTH_LONG).show();
-
+                        break;
                     }
 
                 }
