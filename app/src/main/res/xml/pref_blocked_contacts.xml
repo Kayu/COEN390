@@ -28,21 +28,13 @@
         android:key="delete_all_contacts"
         android:title="Delete All Currently Blocked Contact" />
 
-    <com.example.kayuho.coen390.Model.ListBlockedContactsTextPref
-        android:defaultValue="-1"
-        android:key="blocked_list"
-        android:title="@string/list_blocked_contacts"/>
-        <!--android:entries="@array/list_blocked_contacts_entries" -->
-        <!-- android:entryValues="@array/list_blocked_contacts_values" -->
 
-    <PreferenceCategory android:title="List of Blocked Contacts">
-        <ListPreference
+
+        <com.example.kayuho.coen390.Model.ListBlockedContactsTextPref
             android:defaultValue="-1"
             android:key="blocked_list"
-            android:entries="@array/list_blocked_contacts_entries"
-            android:entryValues="@array/list_blocked_contacts_values"
-            android:title="Right Button"/>
+            android:title="See Blocked Contacts"/>
 
-    </PreferenceCategory>
+
 
 </PreferenceScreen>

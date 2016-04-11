@@ -1,5 +1,6 @@
 package com.example.kayuho.coen390.Model;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -32,14 +33,12 @@ public class ListBlockedContactsTextPref extends ListPreference {
 
 
 
-
-    public void onCreate(DialogInterface dialog, int option) {
-
+    @Override
+    public void onPrepareDialogBuilder(AlertDialog.Builder builder ) {
 
             Cursor getListCursor = db.getAllData_contacts();
 
-            ListPreference listPreferenceCategory = (ListPreference)findPreferenceInHierarchy("blocked_list");
-
+            StringBuilder placeHolder = new StringBuilder();
             if (getListCursor.getCount() == 0)
             {
                 Toast.makeText(mContext, "The blocked contacts list is currently empty", Toast.LENGTH_LONG).show();
@@ -49,23 +48,22 @@ public class ListBlockedContactsTextPref extends ListPreference {
 
             if (getListCursor.getCount() < 5){
                 int i = 0;
-                CharSequence entries[] = new String[5];
-                CharSequence entryValues[] = new String[5];
+
                 while (getListCursor.moveToNext()){
-                    entries[i] = getListCursor.getString(2);
-                    entryValues[i] = Integer.toString(i);
+
+                    placeHolder.append(Integer.toString(i+1)+". "+getListCursor.getString(2)+"\n");
+
                     i++;
                 }
 
-                listPreferenceCategory.setEntries(entries);
-                listPreferenceCategory.setEntryValues(entryValues);
-
+                builder.setMessage(placeHolder);
             }
 
         }
 
 
     }
+
 
 
 
