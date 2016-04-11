@@ -46,7 +46,7 @@ public class TaxiTextPreference extends EditTextPreference {
         //In this case it is checking to see if the Ok button was clicked
         if (option == DialogInterface.BUTTON_POSITIVE) {
 
-            Cursor getTaxiCursor = db.getTaxiNum();
+            //Cursor getTaxiCursor = db.getTaxiNum();
 
 
             //create an EditTextPreference object
@@ -55,12 +55,15 @@ public class TaxiTextPreference extends EditTextPreference {
             EditText textField = pref_Taxi.getEditText();
             //Get the text from the edit text
             String taxi_num = textField.getText().toString();
-            Log.i("TaxiNum: ",taxi_num);
+            Log.i("TaxiNum: ", taxi_num);
+
 
 
                 db.deleteAll_taxi();
                 db.insert_taxi(taxi_num);
                 Toast.makeText(mContext, "Data Inserted", Toast.LENGTH_LONG).show();
+
+
 
 
         }
