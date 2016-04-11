@@ -50,7 +50,7 @@ public class DeleteBlockedContactConfirmationPreference extends EditTextPreferen
             boolean result = true;
 
             //create an EditTextPreference object
-            EditTextPreference pref_blocked_number = (EditTextPreference) findPreferenceInHierarchy("blocked_contacts");
+            EditTextPreference pref_blocked_number = (EditTextPreference)findPreferenceInHierarchy("delete_blocked_contact");
 
             //EditText blockEditText = pref_blocked_number.getEditText();
             //Get the text from the edit text

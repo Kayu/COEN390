@@ -23,7 +23,7 @@
         android:id="@+id/DirectionListView"
         android:layout_below="@+id/map"
         android:textAlignment="center"
-        android:background="#ffffff">
+        android:background="@drawable/list_view_design">
 
 
     </ListView>

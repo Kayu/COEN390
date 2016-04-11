@@ -19,6 +19,8 @@ import com.example.kayuho.coen390.Service.AddressDBHelper;
 public class AddressEditTextPreference extends EditTextPreference {
     private AddressDBHelper db;
     protected Context mContext;
+    private String mFont = "Brandon_light.otf";
+
     //This constructor instanciated the Dbhelper obejct and store the context
     public AddressEditTextPreference(Context context) {
         super(context);
@@ -55,6 +57,8 @@ public class AddressEditTextPreference extends EditTextPreference {
             EditText textField = pref_address.getEditText();
             //Get the text from the edit text
             String address = textField.getText().toString();
+
+
             Log.i("address: ",address);
 
             if(getAddressCursor.moveToFirst()){

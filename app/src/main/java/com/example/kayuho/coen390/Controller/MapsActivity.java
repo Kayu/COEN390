@@ -53,7 +53,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onPause() {
         super.onPause();
-        OutgoingCallReceiver newCall = new OutgoingCallReceiver();
 
 
     }
@@ -72,7 +71,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         final ListView directions = (ListView)findViewById(R.id.DirectionListView);
-        String fontPathButton = "fonts/ostrich-regular.ttf";
+        String fontPathButton = "fonts/Brandon_light.otf";
        final Typeface tf_Button = Typeface.createFromAsset(getAssets(),fontPathButton);
 
         //directionsTextView.setTypeface(tf_Button);
