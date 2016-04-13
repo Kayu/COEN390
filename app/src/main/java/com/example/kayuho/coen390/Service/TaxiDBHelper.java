@@ -16,12 +16,12 @@ public class TaxiDBHelper extends SQLiteOpenHelper {
     private SQLiteDatabase db;
 
     //query for Taxi table
-    private final String TaxiTable = "create table if not exists "
+    private String TaxiTable = "create table if not exists "
             + DbContract.TaxiEntry.TABLE_NAME + " ( "
             + BaseColumns._ID + " integer primary key autoincrement, "
             + DbContract.TaxiEntry.COLUMN_NUM + " text);";
 
-    private final String DROP_TAXI = "DROP TABLE IF EXISTS " + DbContract.TaxiEntry.TABLE_NAME;
+    private String DROP_TAXI = "DROP TABLE IF EXISTS " + DbContract.TaxiEntry.TABLE_NAME;
 
     public TaxiDBHelper(Context context){
         super(context, DbContract.DATABASE_NAME, null, DATABASE_VERSION);
@@ -41,10 +41,9 @@ public class TaxiDBHelper extends SQLiteOpenHelper {
 
     //insert taxi into database
     public boolean insert_taxi(String num){
-        db = this.getWritableDatabase(); //get permission to write into the database
-        final String retrieveQuery="SELECT * FROM "+ DbContract.AddressEntry.TABLE_NAME;
-        Cursor data = db.rawQuery(retrieveQuery,null);
 
+        db = this.getWritableDatabase();
+        onCreate(db);
         ContentValues values = new ContentValues(1); //amount of items trying to input into the DB
         values.put(DbContract.TaxiEntry.COLUMN_NUM, num);
         long successful = db.insert(DbContract.TaxiEntry.TABLE_NAME, null, values);
@@ -55,16 +54,19 @@ public class TaxiDBHelper extends SQLiteOpenHelper {
 
     //get the taxi number
     public Cursor getTaxiNum(){
-        db = this.getReadableDatabase();  //open connection to DB
-        final String retrieveQuery="SELECT * FROM "+ DbContract.TaxiEntry.TABLE_NAME;
+
+        db = this.getReadableDatabase(); //open connection to DB
+        onCreate(db);
+        String retrieveQuery="SELECT * FROM "+ DbContract.TaxiEntry.TABLE_NAME;
         Cursor data = db.rawQuery(retrieveQuery, null);
-        db.close(); //close connection to DB
         return data;
     }
 
     //drop the taxi table
     public void deleteAll_taxi(){
+
         db = this.getWritableDatabase();
+        onCreate(db);
         db.delete(DbContract.TaxiEntry.TABLE_NAME, null, null);
         db.close();
 

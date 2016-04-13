@@ -14,31 +14,34 @@ public class TaxiCaller {
     private TaxiDBHelper db;
     protected Context mContext;
 
-    /*
-    public TaxiCaller() {
+
+    public TaxiCaller(Context context) {
+        mContext = context;
+        db = new TaxiDBHelper(context);
+    }
+
+    public void makeCall(){
 
         db = new TaxiDBHelper(mContext);
-    }*/
-
-    public void makeCall(Context context){
-
-
-        db = new TaxiDBHelper(context);
-        String phone_num;
         Cursor taxiCursor = db.getTaxiNum();
+        String phone_num = null;
+        if(taxiCursor.moveToFirst()) {
+            phone_num = taxiCursor.getString(1);
+        }
+        else
+        {
+            phone_num = "#TAXI";
+        }
 
 
         //int count = taxiCursor.getCount();
 
-
-
-
         String phone_num_test = "5143776583";
 
         Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:1" + phone_num_test));
+        callIntent.setData(Uri.parse("tel:1" + phone_num));
         try {
-            context.startActivity(callIntent);
+            mContext.startActivity(callIntent);
         }
         catch(SecurityException e){
             e.printStackTrace();

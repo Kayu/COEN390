@@ -47,25 +47,16 @@ public class TaxiTextPreference extends EditTextPreference {
         if (option == DialogInterface.BUTTON_POSITIVE) {
 
             //Cursor getTaxiCursor = db.getTaxiNum();
-
-
             //create an EditTextPreference object
             EditTextPreference pref_Taxi = (EditTextPreference)findPreferenceInHierarchy("set_taxi");
             //Used to get text from text field, instead of the one stored in Preferences
-            EditText textField = pref_Taxi.getEditText();
+            String taxi_num = pref_Taxi.getText();
             //Get the text from the edit text
-            String taxi_num = textField.getText().toString();
+            //String taxi_num = textField.getText().toString();
             Log.i("TaxiNum: ", taxi_num);
-
-
-
-                db.deleteAll_taxi();
-                db.insert_taxi(taxi_num);
-                Toast.makeText(mContext, "Data Inserted", Toast.LENGTH_LONG).show();
-
-
-
-
+            //db.deleteAll_taxi();
+            db.insert_taxi(taxi_num);
+            Toast.makeText(mContext, "Data Inserted", Toast.LENGTH_LONG).show();
         }
 
         super.onClick(dialog, option);

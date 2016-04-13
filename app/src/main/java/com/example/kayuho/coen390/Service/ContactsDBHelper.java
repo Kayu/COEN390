@@ -16,13 +16,13 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
     private SQLiteDatabase db;
 
     //query for contacts table
-    private final String ContactsTable = "create table if not exists "
+    private String ContactsTable = "create table if not exists "
             + DbContract.ContactsEntry.TABLE_NAME + " ( "
             + BaseColumns._ID + " integer primary key autoincrement, "
             + DbContract.ContactsEntry.COLUMN_NAME + " text, "
             + DbContract.ContactsEntry.COLUMN_NUM + " text);";   //Integer for phone numbers?
 
-    private final String DROP_CONTACTS = "DROP TABLE IF EXISTS " + DbContract.ContactsEntry.TABLE_NAME;
+    private String DROP_CONTACTS = "DROP TABLE IF EXISTS " + DbContract.ContactsEntry.TABLE_NAME;
 
     public ContactsDBHelper(Context context){
         super(context, DbContract.DATABASE_NAME, null, DATABASE_VERSION);
@@ -43,6 +43,7 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
     //insert contact into database (max 5) && tried eliminating use of name. In my file in only uses phone number
     public boolean insert_contact(String num){
         db = this.getWritableDatabase();
+        onCreate(db);
         ContentValues values = new ContentValues(2);
         values.put(DbContract.ContactsEntry.COLUMN_NUM, num);
         long successful = db.insert(DbContract.ContactsEntry.TABLE_NAME, null, values);
@@ -54,6 +55,7 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
     //Select specific contact number
     public Cursor getContact_num(int num){
         db = this.getWritableDatabase();
+        onCreate(db);
         final String retrieveQuery= "SELECT phone_num, FROM"+ DbContract.ContactsEntry.TABLE_NAME
                 + " WHERE id="+ num;
         Cursor data = db.rawQuery(retrieveQuery, null);
@@ -63,6 +65,7 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
     //retrieve specific contact
     public Cursor getContact(int num){
         db = this.getReadableDatabase();
+        onCreate(db);
         final String retrieveQuery= "SELECT * FROM"+ DbContract.ContactsEntry.TABLE_NAME
                 + " WHERE id="+ num;
         Cursor data = db.rawQuery(retrieveQuery,null);
@@ -72,6 +75,7 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
     // get all data CONTACTS
     public Cursor getAllData_contacts(){
         db = this.getReadableDatabase();  //open connection to DB
+        onCreate(db);
         final String retrieveQuery="SELECT * FROM "+ DbContract.ContactsEntry.TABLE_NAME;
         Cursor data = db.rawQuery(retrieveQuery, null);
         return data;
@@ -80,6 +84,7 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
     //drop the contacts table
     public void deleteAll_contacts(){
         db = this.getWritableDatabase();
+        onCreate(db);
         int sucess = db.delete(DbContract.ContactsEntry.TABLE_NAME, null, null);
         db.close();
 
@@ -88,6 +93,7 @@ public class ContactsDBHelper extends SQLiteOpenHelper {
     //deletes a specific contact from the table based on the ID
     public void delete_contact(String num){
         db = this.getWritableDatabase();
+        onCreate(db);
         String query = BaseColumns._ID  + " = ?";
         String[] numbers = new String[] { String.valueOf(num) };
         int sucess = db.delete(DbContract.ContactsEntry.TABLE_NAME, query, numbers);
