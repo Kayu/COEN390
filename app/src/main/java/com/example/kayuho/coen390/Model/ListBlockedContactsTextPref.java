@@ -46,7 +46,7 @@ public class ListBlockedContactsTextPref extends ListPreference {
             }
 
 
-            if (getListCursor.getCount() < 5){
+            if (getListCursor.getCount() <= 5){
                 int i = 0;
 
                 while (getListCursor.moveToNext()){

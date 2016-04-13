@@ -74,7 +74,7 @@ public class DeleteBlockedContactConfirmationPreference extends EditTextPreferen
                 }
 
                 // If there are contacts, incrementally check the database to ensure the contact to be deleted is in the db
-                else if (getContactCursor.getCount() < 5) {
+                else if (getContactCursor.getCount() <= 5) {
                     while (getContactCursor.moveToNext()) {
                         if (getContactCursor.getString(2).equals(BlockedContactNum)) {
                             String ContactID = getContactCursor.getString(0);

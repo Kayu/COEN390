@@ -54,7 +54,7 @@ public class TaxiTextPreference extends EditTextPreference {
             //Get the text from the edit text
             String taxi_num = taxi_text.getText().toString();
             Log.i("TaxiNum: ", taxi_num);
-            //db.deleteAll_taxi();
+            db.deleteAll_taxi();
             db.insert_taxi(taxi_num);
             Toast.makeText(mContext, "Data Inserted", Toast.LENGTH_LONG).show();
         }

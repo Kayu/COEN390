@@ -331,4 +331,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            //startActivity(new Intent(this, MainActivity.class));
+            this.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
