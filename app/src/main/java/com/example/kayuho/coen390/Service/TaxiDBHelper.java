@@ -55,7 +55,7 @@ public class TaxiDBHelper extends SQLiteOpenHelper {
     //get the taxi number
     public Cursor getTaxiNum(){
 
-        db = this.getReadableDatabase(); //open connection to DB
+        db = this.getWritableDatabase(); //open connection to DB
         onCreate(db);
         String retrieveQuery="SELECT * FROM "+ DbContract.TaxiEntry.TABLE_NAME;
         Cursor data = db.rawQuery(retrieveQuery, null);
@@ -67,7 +67,7 @@ public class TaxiDBHelper extends SQLiteOpenHelper {
 
         db = this.getWritableDatabase();
         onCreate(db);
-        db.delete(DbContract.TaxiEntry.TABLE_NAME, null, null);
+        long successs = db.delete(DbContract.TaxiEntry.TABLE_NAME, null, null);
         db.close();
 
     }

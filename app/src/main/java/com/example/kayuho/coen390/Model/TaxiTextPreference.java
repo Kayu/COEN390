@@ -50,9 +50,9 @@ public class TaxiTextPreference extends EditTextPreference {
             //create an EditTextPreference object
             EditTextPreference pref_Taxi = (EditTextPreference)findPreferenceInHierarchy("set_taxi");
             //Used to get text from text field, instead of the one stored in Preferences
-            String taxi_num = pref_Taxi.getText();
+            EditText taxi_text = pref_Taxi.getEditText();
             //Get the text from the edit text
-            //String taxi_num = textField.getText().toString();
+            String taxi_num = taxi_text.getText().toString();
             Log.i("TaxiNum: ", taxi_num);
             //db.deleteAll_taxi();
             db.insert_taxi(taxi_num);
