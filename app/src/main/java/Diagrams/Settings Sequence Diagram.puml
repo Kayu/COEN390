@@ -1,5 +1,12 @@
 @startuml
+User -> MainActivity: Setting Button
+activate MainActivity
+MainActivity->SettingsActivity:startActivity(Intent)
+activate SettingsActivity
+User -> SettingsActivity:Address Button
 SettingsActivity->AddressEditTextPreference:onClick()
+activate AddressEditTextPreference
 AddressEditTextPreference->AddressEditTextPreference:onCreate()
-
+activate AddressEditTextPreference
+hide footbox
 @enduml

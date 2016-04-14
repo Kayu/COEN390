@@ -1,0 +1,31 @@
+@startuml
+User -> MainActivity: Get Home button
+activate MainActivity
+MainActivity->Bundle:Bundle()
+activate Bundle
+MainActivity->Bundle:putParcelable(String, Direction):transit
+MainActivity->Bundle:putParcelable(String, Direction):walking
+deactivate Bundle
+MainActivity->Intent:Intent(Context,Context)
+activate Intent
+MainActivity->Intent:putExtra(String, Bundle)
+deactivate Intent
+MainActivity->TransitOptionsActivity:startActivity(Intent)
+deactivate MainActivity
+activate TransitOptionsActivity
+User -> TransitOptionsActivity: Public Transit Button
+TransitOptionsActivity -> Bundle: Bundle()
+activate Bundle
+TransitOptionsActivity -> Bundle:putSerializable(String,ArrayList):LatLng
+TransitOptionsActivity -> Bundle:putSerializable(String,ArrayList):Directions
+deactivate Bundle
+TransitOptionsActivity -> Intent:Intent(Context,Context)
+activate Intent
+TransitOptionsActivity->Intent:putExtra(String, Bundle)
+deactivate Intent
+TransitOptionsActivity->MapsActivity:startActivity(Intent)
+activate MapsActivity
+deactivate TransitOptionsActivity
+MapsActivity -> MapsActivity: onMapReady(GoogleMap)
+hide footbox
+@enduml

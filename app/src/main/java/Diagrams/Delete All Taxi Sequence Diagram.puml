@@ -1,0 +1,20 @@
+@startuml
+activate DeleteTaxiConfirmation
+DeleteTaxiConfirmation->DeleteTaxiConfirmation:onClick():OK
+activate DeleteTaxiConfirmation
+DeleteTaxiConfirmation->TaxiDBHelper:new TaxiDBHelper()
+activate TaxiDBHelper
+DeleteTaxiConfirmation->TaxiDBHelper:insert_address(String address)
+TaxiDBHelper->DbContract:DbContract.TaxiEntry.TABLE_NAME
+activate DbContract
+DbContract->TaxiDBHelper:TABLE_NAME
+deactivate DbContract
+TaxiDBHelper->SQLiteDatabase:getWritableDatabase()
+activate SQLiteDatabase
+TaxiDBHelper->SQLiteDatabase:delete(TABLE_NAME, null, null)
+SQLiteDatabase->TaxiDBHelper:true
+deactivate SQLiteDatabase
+TaxiDBHelper->DeleteTaxiConfirmation: true
+deactivate TaxiDBHelper
+hide footbox
+@enduml

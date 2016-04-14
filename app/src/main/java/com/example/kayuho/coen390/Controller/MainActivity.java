@@ -154,36 +154,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /*
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_CALL_PHONE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    new TaxiCaller().makeCall(MainActivity.this);
-                }
-                else{
-                    Toast.makeText(MainActivity.this, "PHONE_CALL Denied", Toast.LENGTH_LONG).show();
-                }
-                break;
-            }
-            default:super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
-
-    private void callPhone()
-    {
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:15146272011"));
-        try {
-            startActivity(callIntent);
-        }
-        catch(SecurityException e){
-            e.printStackTrace();
-        }
-
-    }
-*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

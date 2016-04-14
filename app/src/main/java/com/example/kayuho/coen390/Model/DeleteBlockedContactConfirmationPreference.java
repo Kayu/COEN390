@@ -86,8 +86,6 @@ public class DeleteBlockedContactConfirmationPreference extends EditTextPreferen
                         }
 
                     }
-
-
                 }
             }catch (BlockedContactInvalidLetters e){
                 Toast.makeText(mContext, "Please enter a ten digit phone number with only numbers 0-9", Toast.LENGTH_LONG).show();

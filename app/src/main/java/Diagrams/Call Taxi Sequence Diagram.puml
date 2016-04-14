@@ -1,0 +1,17 @@
+@startuml
+
+User->MainActivity:Call Taxi Button
+activate MainActivity
+MainActivity->TaxiCaller:TaxiCaller()
+activate TaxiCaller
+TaxiCaller->TaxiDbHelper: TaxiDBHelper()
+activate TaxiDbHelper
+MainActivity->TaxiCaller:makeCall()
+TaxiCaller->TaxiDbHelper:getTaxiNum
+TaxiDbHelper->TaxiCaller:Cursor
+deactivate TaxiDbHelper
+TaxiCaller-> Intent:Intent(Intent.ACTION_CALL)
+activate Intent
+TaxiCaller-> Intent:setData(phone number)
+hide footbox
+@enduml

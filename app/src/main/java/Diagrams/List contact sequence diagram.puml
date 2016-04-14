@@ -1,0 +1,20 @@
+@startuml
+activate ListBlockedContactsTextPref
+ListBlockedContactsTextPref->ListBlockedContactsTextPref:onClick():OK
+activate ListBlockedContactsTextPref
+ListBlockedContactsTextPref->ContactsDBHelper:new TaxiDBHelper()
+activate ContactsDBHelper
+ListBlockedContactsTextPref->ContactsDBHelper:insert_address(String address)
+ContactsDBHelper->DbContract:DbContract.TaxiEntry.TABLE_NAME
+activate DbContract
+DbContract->ContactsDBHelper:TABLE_NAME
+deactivate DbContract
+ContactsDBHelper->SQLiteDatabase:getWritableDatabase()
+activate SQLiteDatabase
+ContactsDBHelper->SQLiteDatabase:rawQuery(String, null)
+SQLiteDatabase->ContactsDBHelper:Cursor
+deactivate SQLiteDatabase
+ContactsDBHelper->ListBlockedContactsTextPref: Cursor
+deactivate ContactsDBHelper
+hide footbox
+@enduml

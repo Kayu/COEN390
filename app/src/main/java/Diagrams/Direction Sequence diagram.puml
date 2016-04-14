@@ -1,0 +1,45 @@
+@startuml
+activate MainActivity
+MainActivity->GPSListener:GPSListener(context, boolean)
+activate GPSListener
+
+GPSListener->GPSListener:getLocation
+
+MainActivity->GPSListener:getLatitude
+GPSListener->MainActivity:latitude
+MainActivity->GPSListener:getLongitude
+GPSListener->MainActivity:longitude
+deactivate GPSListener
+MainActivity->AddressDBHelper:getAddress()
+activate AddressDBHelper
+AddressDBHelper->MainActivity:Address:String
+deactivate AddressDBHelper
+MainActivity->UrlStringBuilder:UrlStringBuilder(context,String,String)
+activate UrlStringBuilder
+UrlStringBuilder->MainActivity:url:String
+deactivate UrlStringBuilder
+MainActivity->ApiRequest:execute
+activate ApiRequest
+ApiRequest->Server:GET
+activate Server
+Server->ApiRequest:Json Response
+deactivate Server
+ApiRequest->JsonParser:JasonParser()
+activate JsonParser
+ApiRequest->JsonParser:createObject(BufferedReader)
+JsonParser->RouteDecoder:RouteDecoder.decodePolyline(String)
+activate RouteDecoder
+RouteDecoder->JsonParser:String
+deactivate RouteDecoder
+JsonParser->Direction:Direction(ArrayList, ArrayList, String, String)
+activate Direction
+Direction->JsonParser:direction
+deactivate Direction
+JsonParser->ApiRequest:direction
+deactivate JsonParser
+MainActivity->ApiRequest:getDirection()
+ApiRequest->MainActivity:direction
+deactivate ApiRequest
+deactivate MainActivity
+hide footbox
+@enduml

@@ -1,10 +1,20 @@
 @startuml
+activate MainActivity
 MainActivity-->MainActivity:onPause()
-MainActivity-->OutgoingCallReceiver:create new OutgoingCallReceiver()
+MainActivity-->OutgoingCallReceiver:OutgoingCallReceiver()
+activate OutgoingCallReceiver
 OutgoingCallReceiver-->OutgoingCallReceiver:onReceive()
+activate OutgoingCallReceiver
+deactivate OutgoingCallReceiver
 OutgoingCallReceiver-->OutgoingCallReceiver:checkIfNeedBlocking
-OutgoingCallReceiver-->DbHelper:getAllData_contacts()
-DbHelper-->DbHelper:getAllData_contacts()
-DbHelper-->OutgoingCallReceiver:Cursor data
+activate OutgoingCallReceiver
+deactivate OutgoingCallReceiver
+OutgoingCallReceiver-->ContactsDbHelper:getAllData_contacts()
+activate ContactsDbHelper
+ContactsDbHelper-->OutgoingCallReceiver:Cursor data
+deactivate ContactsDbHelper
 OutgoingCallReceiver-->OutgoingCallReceiver:setResultData(null)
+activate OutgoingCallReceiver
+deactivate OutgoingCallReceiver
+hide footbox
 @enduml
